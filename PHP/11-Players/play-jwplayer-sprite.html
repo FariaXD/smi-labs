@@ -1,0 +1,67 @@
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+		
+		<title>Play video using JW Plawyer - Sprite</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link REL="stylesheet" TYPE="text/css" href="../Styles/GlobalStyle.css">
+		
+		<script type="text/javascript" src="/jwplayer6/jwplayer.js"> </script>
+	</head>
+		
+	<body>
+
+		<h1 align="center">Play video using JW Player and Sprite</h1>
+		
+		<br>
+		
+		<table align="center" border="0">
+			<tr>
+				<td>
+					<p id="container">JW Player is loading...</p>
+
+					<script  type="text/javascript">
+						jwplayer("container").setup({
+							allowfullscreen: true,
+							allowscriptaccess: "always",
+							volume: 80,
+							primary: "flash",
+							autostart: "false",
+							author: "Carlos Gonçalves",
+							date: "April 01 2018 00:06:27",
+							width: 640,
+							height: 480,
+							playlist:
+								[ {
+									title: "Um filme",
+									description: "Mais um filme por ai...",
+									image: "BigBuckBunny.jpeg",
+									sources: 
+										[ { 
+											file: "BigBuckBunny.mp4",
+											type: "mp4",
+										} ],
+									tracks:
+										[ {
+											file: "BigBuckBunny-pt.vtt",
+											label: "Português",
+											kind: "Subtitles",
+											"default": true,
+										}, {
+											file: "BigBuckBunny-thumbs-sprite.vtt",
+											kind: "thumbnails",
+										} ]
+								} ]
+						});
+					</script>
+				</td>
+			</tr>
+		</table>
+		
+		<p align="center"><a href='javascript:history.back()'>Back</a></p>
+
+	</body>
+
+</html>

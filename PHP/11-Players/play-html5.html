@@ -1,0 +1,45 @@
+<html>
+
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+		
+		<title>Play video using HTML5</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link REL="stylesheet" TYPE="text/css" href="../Styles/GlobalStyle.css">
+		
+		<script type="text/javascript" src="/jwplayer6/jwplayer.js"> </script>
+	</head>
+
+	<body>
+	
+		<h1 align="center">Play video using HTML5</h1>
+		
+		<br>
+
+		<table align="center" border="0">
+			<tr>
+				<td>
+					<video width="640" height="480" poster="BigBuckBunny.jpeg" controls >
+						<source 
+							src="BigBuckBunny.mp4" 
+							type="video/mp4" />
+						<source 
+							src="BigBuckBunny.ogv" 
+							type="video/ogg" />
+						<track 
+							label="Português" 
+							kind="subtitles" 
+							srclang="pt" 
+							src="BigBuckBunny-pt.vtt" default>
+					</video>
+				</td>
+			</tr>
+		</table>
+		
+		<p align="center"><a href='javascript:history.back()'>Back</a></p>
+
+	</body>
+
+</html>

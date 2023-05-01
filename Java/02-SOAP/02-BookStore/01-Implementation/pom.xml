@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project 
+		xmlns="http://maven.apache.org/POM/4.0.0" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>smi.demo.ws.soap.bookstore</groupId>
+		<artifactId>ServiceBookStoreSOAP</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<groupId>smi.demo.ws.soap.bookstore.implementation</groupId>
+	<artifactId>ServiceBookStoreImplementation</artifactId>
+
+	<packaging>jar</packaging>
+
+	<name>2.2.1 - Service BookStore - SOAP - Implementation</name>	
+	<description>SOAP Web Service BookStore Implementation</description>
+    
+	<dependencies>
+		<!-- JUnit - Begin -->        
+		<dependency>
+		  <groupId>junit</groupId>
+		  <artifactId>junit</artifactId>
+		</dependency>
+		<!-- JUnit - End -->
+
+		<!-- MTOM anotation - Begin -->
+		<dependency>
+		  <groupId>javax.xml.ws</groupId>
+		  <artifactId>jaxws-api</artifactId>
+		</dependency>
+		<!-- MTOM anotation - End -->
+
+		<!-- Servlet API - Begin -->
+		<dependency>
+		  <groupId>javax.servlet</groupId>
+		  <artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<!-- Servlet API - End -->
+		
+		<!-- JAXB and JAXWS for Java 11 - Begin -->
+		<dependency>
+		  <groupId>javax.xml.bind</groupId>
+		  <artifactId>jaxb-api</artifactId>
+		</dependency>
+
+		<dependency>
+		  <groupId>com.sun.xml.messaging.saaj</groupId>
+		  <artifactId>saaj-impl</artifactId>
+		</dependency>
+		
+		<dependency>
+		  <groupId>com.sun.xml.ws</groupId>
+		  <artifactId>jaxws-rt</artifactId>
+		</dependency>
+		
+		<dependency>
+		  <groupId>com.sun.xml.ws</groupId>
+		  <artifactId>rt</artifactId>
+		</dependency>
+		<!-- JAXB and JAXWS for Java 11 - End -->
+
+	</dependencies>
+    
+	<build>
+		<plugins>
+
+			<!-- Compile the code using a specific java version (not maven defaults) -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+					
+				<configuration>
+					<!--
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					-->
+					<release>${java-release}</release>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+</project>
