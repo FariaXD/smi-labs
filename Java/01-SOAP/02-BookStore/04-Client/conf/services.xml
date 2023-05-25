@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceLocations>
+    <Description>Book store services locations</Description>
+    <Locations>
+      <ServiceLocation>http://localhost:8082/serviceBookStore?wsdl</ServiceLocation>
+	  <ServiceLocation>http://localhost:7080/ServiceBookStore-SOAP-Tomcat-1.0.0/serviceBookStore?WSDL</ServiceLocation>
+	  <ServiceLocation>http://localhost:8080/ServiceBookStore-SOAP-Tomcat-1.0.0/serviceBookStore?WSDL</ServiceLocation>
+    </Locations>
+</ServiceLocations>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project 
+		xmlns="http://maven.apache.org/POM/4.0.0" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>smi.demo.soap</groupId>
+		<artifactId>smi.demo.soap.java</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<groupId>smi.demo.soap.bookstore</groupId>
+	<artifactId>smi.demo.soap.bookstore.java</artifactId>
+    <version>1.0.0</version>
+
+	<packaging>pom</packaging>
+
+	<name>SMI SOAP Java BookStore Example</name>	
+	<description>SOAP Web Service BookStore</description>
+
+	<properties>
+		<!-- URL of service WSDL -->
+		<service.url.wsdl>http://localhost:8082/serviceBookStore?wsdl</service.url.wsdl>
+	</properties>
+  
+	<modules>
+		<!-- Service Implementation -->
+		<module>01-Implementation</module>
+			
+		<!-- Deploy service in Apache Tomcat -->
+		<module>02-DeployTomcat</module>
+			
+		<!-- Deploy service in Java Standalone application (embeded on main function) -->
+		<module>03-DeployStandalone</module>
+			
+		<!-- Client for the service (Java GUI) -->
+		<module>04-Client</module>
+	</modules>
+
+</project>

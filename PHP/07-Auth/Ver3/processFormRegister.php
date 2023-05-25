@@ -30,7 +30,7 @@ session_start();
 
 header('Content-Type: text/html; charset=utf-8');
 
-if ($_SESSION['captcha'] == $_POST['captcha']) {
+if ($_SESSION['captcha'] == $captcha) {
     $captchaVerify = true;
 }
 $serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING, $flags);
@@ -53,8 +53,10 @@ function insertUserIntoDB(string $username, string $password, string $email)
         "('$username', '$password', '$email', '0')";
     if (mysqli_query($GLOBALS['ligacao'], $query) == false) {
         echo "User could not be added to database. Details: " . dbGetLastError();
+        return false;
     } else {
         echo "User was added to the database.";
+        return true;
     }
     dbDisconnect();
 }
@@ -157,11 +159,15 @@ function sendConfirmationEmail(string $baseUrl, string $email, string $username)
 }
 
 if ($password == $confirmPassword && $captchaVerify) {
-    $challengecode = sendConfirmationEmail($baseUrl, $email, $username);
-    insertUserIntoDB($username, $password, $email);
-    insertChallengeIntoDB($challengecode, getIDUserViaEmail($email));
-    insertSecurityOptionIntoDB(getIDUserViaEmail($email));
-    $nextUrl = "confirmation.php";
+    if(insertUserIntoDB($username, $password, $email)){
+        $challengecode = sendConfirmationEmail($baseUrl, $email, $username);
+        insertChallengeIntoDB($challengecode, getIDUserViaEmail($email));
+        insertSecurityOptionIntoDB(getIDUserViaEmail($email));
+        $nextUrl = "confirmation.php";
+    }
+    else{
+        $nextUrl = "formRegister.php";
+    }
 } else {
     $nextUrl = "formRegister.php";
 }

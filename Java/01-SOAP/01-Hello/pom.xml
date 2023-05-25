@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project
+		xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>smi.demo.soap</groupId>
+		<artifactId>smi.demo.soap.java</artifactId>
+		<version>1.0.0</version>
+	</parent>
+    
+	<groupId>smi.demo.soap.hello</groupId>
+	<artifactId>smi.demo.soap.hello.java</artifactId>
+    <version>1.0.0</version>
+    
+	<packaging>pom</packaging>
+	
+	<name>SMI SOAP Java Hello Example</name>
+	<description>Java SOAP Web Services used in the context of the SMI course</description>
+	
+	<properties>		
+		<!-- URL of service WSDL -->
+		<service.url.wsdl>http://localhost:8081/serviceHello?wsdl</service.url.wsdl>
+	</properties>
+
+    <modules>
+        <module>01-Hello-ServiceInterface</module>
+		<module>02-Hello-ServiceImplementation-Standalone</module>
+		<module>03-Hello-ServiceImplementation-Tomcat</module>
+		<module>04-Hello-Client-CLI</module>
+    </modules>
+
+</project>

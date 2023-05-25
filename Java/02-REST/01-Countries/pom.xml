@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project 
+		xmlns="http://maven.apache.org/POM/4.0.0" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>smi.demo.rest</groupId>
+		<artifactId>smi.demo.rest.java</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<groupId>smi.demo.rest.countries</groupId>
+	<artifactId>ServiceCountriesREST</artifactId>
+	<version>1.0.0</version>
+  	
+	<packaging>pom</packaging>
+	
+	<name>Service Countries - REST</name>	
+	<description>REST Web Service Countries</description>
+	
+	<url>https://java2blog.com/restful-web-services-jaxrs-crud-example/</url>
+  		  
+	<modules>
+		<!-- Service Implementation -->
+		<module>01-Implementation</module>
+		
+		<!-- Deploy service in Apache Tomcat -->
+		<module>02-DeployTomcat</module>
+		
+		<!-- Deploy service in Jetty server -->
+		<module>03-DeployJetty</module>
+		
+		<!-- Deploy service in Java Standalone application (embeded on main function) -->
+		<module>04-DeployEmbeded</module>
+	</modules>
+  
+	<build>
+		<plugins>
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project 
+		xmlns="http://maven.apache.org/POM/4.0.0" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>smi.demo.soap.bookstore</groupId>
+		<artifactId>smi.demo.soap.bookstore.java</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<groupId>smi.demo.soap.bookstore.deploy.tomcat</groupId>
+	<artifactId>ServiceBookDeployTomcat</artifactId>
+
+	<packaging>war</packaging>
+	
+	<name>02 - SOAP BookStore Service - Deploy - Tomcat</name>
+	<description>SOAP Web Service BookStore deploy on Apache Tomcat</description>
+
+	<properties>
+		<DeployName>ServiceBookStore-SOAP-Tomcat-${project.version}</DeployName>
+	</properties>
+
+	<dependencies>
+		<!-- Service implementation - Begin -->
+		<dependency>
+			<groupId>smi.demo.soap.bookstore.implementation</groupId>
+			<artifactId>ServiceBookStoreImplementation</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<!-- Service implementation - End -->
+		
+		<!-- JUnit - Begin -->        
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<!-- JUnit - End -->
+    
+		<!-- Servlet API - Begin -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<!-- Servlet API - End -->
+	</dependencies>
+    
+	<build>
+		<plugins>
+
+			<!-- Compile the code using a specific java version (not maven defaults) -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+					
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<!--
+					<release>${java-release}</release>
+					-->
+				</configuration>
+			</plugin>
+
+			<!-- Generate the WAR file -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warName>${DeployName}</warName>
+          
+					<!-- web.xml is not mandatory since JavaEE 5 -->
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+</project>

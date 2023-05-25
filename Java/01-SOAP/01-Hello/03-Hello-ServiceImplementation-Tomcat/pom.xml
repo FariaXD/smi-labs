@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project 
+		xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>smi.demo.soap.hello</groupId>
+		<artifactId>smi.demo.soap.hello.java</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<groupId>smi.demo.soap.hello.implementation.tomcat</groupId>
+	<artifactId>ServiceHelloImplementationTomcat</artifactId>
+	<version>1.0.0</version>
+		
+	<packaging>war</packaging>
+	
+	<name>03 - SOAP Hello Service - Implementation Tomcat</name>	
+	<description>SOAP Hello Web Service Implementation Tomcat</description>
+
+    <dependencies>
+		<!-- Service interface -->
+		<dependency>
+            <groupId>smi.demo.soap.hello.interface</groupId>
+			<artifactId>ServiceHelloInterface</artifactId>
+			<version>1.0.0</version>
+        </dependency>
+
+        <!-- Servlet API - Begin -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+		<!-- Servlet API - End -->
+    </dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				
+				<configuration>
+					<!-- ${java.version}<=1.8 -->
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					
+					<!-- ${java.version}>1.8 -->
+					<!--<release>${java-release}</release>-->
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<!-- web.xml is not mandatory since JavaEE 5 -->
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

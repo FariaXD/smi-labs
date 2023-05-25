@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project 
+		xmlns="http://maven.apache.org/POM/4.0.0" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>    		
+		<groupId>smi.demo.rest.countries</groupId>
+		<artifactId>ServiceCountriesREST</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<groupId>smi.demo.rest.countries.deploy.tomcat</groupId>
+	<artifactId>ServiceCountriesDeployTomcat</artifactId>
+	<version>1.0.0</version>
+		
+	<packaging>war</packaging>
+
+	<name>Service Countries - REST - Deploy - Tomcat</name>
+	<description>REST Web Service Countries deploy on Apache Tomcat</description>
+  
+	<properties>
+		<DeployName>ServiceCountries-REST-Tomcat-${project.version}</DeployName>
+	</properties>
+		
+	<dependencies>
+		<!--
+		<dependency>
+			<groupId>smi.demo.rest.countries.implementation</groupId>
+			<artifactId>ServiceCountriesImplementation</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		-->
+
+		<!-- JUnit - Begin -->        
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<!-- JUnit - End -->
+
+		<!-- Commons Logging - Begin -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<!-- Commons Logging - End -->
+		
+		<!-- Jersey - Begin -->
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-servlet</artifactId>
+		</dependency>
+    
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+		</dependency>
+		<!-- Jersey - End -->
+		
+		<!-- JAXB and JAXWS for Java 11 - Begin -->
+		<!--
+		<dependency>
+		  <groupId>javax.xml.bind</groupId>
+		  <artifactId>jaxb-api</artifactId>
+		</dependency>
+
+		<dependency>
+		  <groupId>com.sun.xml.messaging.saaj</groupId>
+		  <artifactId>saaj-impl</artifactId>
+		</dependency>
+		
+		<dependency>
+		  <groupId>com.sun.xml.ws</groupId>
+		  <artifactId>jaxws-rt</artifactId>
+		</dependency>
+		
+		<dependency>
+		  <groupId>com.sun.xml.ws</groupId>
+		  <artifactId>rt</artifactId>
+		</dependency>
+		-->
+		<!-- JAXB and JAXWS for Java 11 - End -->
+	</dependencies>
+	
+	<build>
+
+		<plugins>
+
+			<!-- Compile the code using a specific java version (not maven defaults) -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+					
+				<configuration>
+					<!--
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					-->
+					<release>${java-release}</release>
+				</configuration>
+			</plugin>
+
+			<!-- Generate the WAR file -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warName>${DeployName}</warName>
+
+					<!-- web.xml is not mandatory since JavaEE 5 -->
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+</project>

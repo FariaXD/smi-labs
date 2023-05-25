@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-        <title>Image Processing</title>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <title>Image Processing</title>
 
-        <link rel="stylesheet" typr="text/css" href="../Styles/GlobalStyle.css">
-    </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <body>
-<?php
-    require_once( "../Lib/lib.php" );
-    require_once( "../Lib/db.php" );
-    require_once( "../Lib/lib-coords.php" );
-    require_once( "../Lib/ImageResize.php" );
+    <link rel="stylesheet" typr="text/css" href="../Styles/GlobalStyle.css">
+</head>
 
-    include_once( "config.php" );
-    include_once( "configDebug.php" );
+<body>
+    <?php
+    require_once("../Lib/lib.php");
+    require_once("../Lib/db.php");
+    require_once("../Lib/lib-coords.php");
+    require_once("../Lib/ImageResize.php");
+
+    include_once("config.php");
+    include_once("configDebug.php");
 
     // Maximum time allowed for the upload
-    set_time_limit( 300 );
+    set_time_limit(300);
 
-    if ( $_FILES['userFile']['error']!=0 ) {
-        $msg = showUploadFileError( $_FILES['userFile']['error'] );
+    if ($_FILES['userFile']['error'] != 0) {
+        $msg = showUploadFileError($_FILES['userFile']['error']);
         echo "\t\t<p>$msg</p>\n";
         echo "\t\t<p><a href='javascript:history.back()'>Back</a></p>\n";
         echo "\t</body>\n";
@@ -39,11 +40,11 @@
 
     // Destination for the uploaded file
     $src = $_FILES['userFile']['tmp_name'];
-    $dst = $dstDir . DIRECTORY_SEPARATOR . /* $USER_ID . DIRECTORY_SEPARATOR . */ $srcName;
+    $dst = $dstDir . DIRECTORY_SEPARATOR . $srcName;
 
     $copyResult = copy($src, $dst);
 
-    if ( $copyResult === false ) {
+    if ($copyResult === false) {
         $msg = "Could not write '$src' to '$dst'";
         echo "\t\t<p>$msg</p>\n";
         echo "\t\t<p><a href='javascript:history.back()'>Back</a></p>";
@@ -53,50 +54,48 @@
     }
 
     unlink($src);
-?>
-        <p>File uploaded with success.</p>
-<?php
+    ?>
+    <p>File uploaded with success.</p>
+    <?php
     $fileInfo = finfo_open(FILEINFO_MIME);
 
     $fileInfoData = finfo_file($fileInfo, $dst);
-    
-    if ( $debug==true ) {
+
+    if ($debug == true) {
         echo "<pre>\n";
-        print_r( $fileInfoData );
+        print_r($fileInfoData);
         echo "</pre>\n<br>";
     }
-    
-    $fileTypeComponents = explode( ";", $fileInfoData);
+
+    $fileTypeComponents = explode(";", $fileInfoData);
 
     $mimeTypeFileUploaded = explode("/", $fileTypeComponents[0]);
     $mimeFileName = $mimeTypeFileUploaded[0];
     $typeFileName = $mimeTypeFileUploaded[1];
 
-    $thumbsDir = $dstDir . DIRECTORY_SEPARATOR . /* $USER_ID . DIRECTORY_SEPARATOR . */ "thumbs";
+    $thumbsDir = $dstDir . DIRECTORY_SEPARATOR . "thumbs";
     $pathParts = pathinfo($dst);
 
     $lat = $lon = "";
 
-    if ( $_POST['description']!=NULL ) {
+    if ($_POST['description'] != NULL) {
         $description = addslashes($_POST['description']);
-    }
-    else {
+    } else {
         $description = "No description available";
     }
 
-    if ( $_POST['title']!=NULL ) {
+    if ($_POST['title'] != NULL) {
         $title = addslashes($_POST['title']);
-    }
-    else {
+    } else {
         $pathParts = pathinfo($srcName);
         $title = $pathParts['filename'];
     }
 
     $width = $configurations['thumbWidth'];
     $height = $configurations['thumbHeight'];
-?>
-        <p>File is of type <?php echo $mimeFileName;?>.</p>
-<?php
+    ?>
+    <p>File is of type <?php echo $mimeFileName; ?>.</p>
+    <?php
 
     $imageFileNameAux = $imageMimeFileName = $imageTypeFileName = null;
 
@@ -105,19 +104,18 @@
     switch ($mimeFileName) {
         case "image":
             $exif = @exif_read_data($dst, 'IFD0', true);
-        
-            if ( $exif===false ) {
-?>
-        <p>No exif header data found.</p>
-<?php
-            }
-            else {
-                if ( $debug==true ) {
+
+            if ($exif === false) {
+    ?>
+                <p>No exif header data found.</p>
+                <?php
+            } else {
+                if ($debug == true) {
                     echo "<pre>";
                     foreach ($exif as $key => $section) {
                         foreach ($section as $name => $val) {
                             echo "$key.$name: <br>\n";
-                            print_r( $val );
+                            print_r($val);
                             echo "<br>\n";
                         }
                     }
@@ -125,38 +123,44 @@
                 }
 
                 $gps = @$exif['GPS'];
-                if ( $gps!=NULL ) {
+                if ($gps != NULL) {
                     $latitudeAux = $gps['GPSLatitude'];
                     $latitudeRef = $gps['GPSLatitudeRef'];
                     $longitudeAux = $gps['GPSLongitude'];
                     $longitudeRef = $gps['GPSLongitudeRef'];
-                                        
-                    if ( ($latitudeAux!=NULL ) && ( $longitudeAux!=NULL ) ) {
 
-                        if ( $debug==true ) {
-                            echo '$latitudeAux: '; print_r($latitudeAux);  echo "<br>\n";
-                            echo '$latitudeRef: '; print_r($latitudeRef);  echo "<br>\n";
-                            echo '$longitudeAux: '; print_r($longitudeAux); echo "<br>\n";
-                            echo '$longitudeRef: '; print_r($longitudeRef); echo "<br>\n";
-                        }                    
-                        
+                    if (($latitudeAux != NULL) && ($longitudeAux != NULL)) {
+
+                        if ($debug == true) {
+                            echo '$latitudeAux: ';
+                            print_r($latitudeAux);
+                            echo "<br>\n";
+                            echo '$latitudeRef: ';
+                            print_r($latitudeRef);
+                            echo "<br>\n";
+                            echo '$longitudeAux: ';
+                            print_r($longitudeAux);
+                            echo "<br>\n";
+                            echo '$longitudeRef: ';
+                            print_r($longitudeRef);
+                            echo "<br>\n";
+                        }
+
                         $lat = getCoordAsString($latitudeAux, $latitudeRef);
                         $lon = getCoordAsString($longitudeAux, $longitudeRef);
-?>
-        <p>File latitude: <?php echo $lat;?></p>
-        <p>File longitude: <?php echo $lon;?></p>
-<?php
+                ?>
+                        <p>File latitude: <?php echo $lat; ?></p>
+                        <p>File longitude: <?php echo $lon; ?></p>
+                    <?php
+                    } else {
+                    ?>
+                        <p>File include GPS information.</p>
+                    <?php
                     }
-                    else {
-?>
-        <p>File include GPS information.</p>
-<?php
-                    }
-                }
-                else {
-?>
-        <p>File does not have GPS information.</p>
-<?php
+                } else {
+                    ?>
+                    <p>File does not have GPS information.</p>
+    <?php
                 }
             }
 
@@ -168,7 +172,7 @@
             $thumbMimeFileName = "image";
             $thumbTypeFileName = $typeFileName;
 
-            $resizeObj = new ImageResize( $dst );
+            $resizeObj = new ImageResize($dst);
             $resizeObj->resizeImage($width, $height, 'crop');
             $resizeObj->saveImage($thumbFileNameAux, $typeFileName, 100);
             $resizeObj->close();
@@ -182,13 +186,13 @@
             $imageTypeFileName = "jpeg";
             echo "\t\t<p>Generating video 1st image...</p>\n";
 
-            // -itsoffset -1 -> "moves" the film one second forward
+            // -itsoffset -1 -> "avança" o filme 1 segundo
             // -i $dst -> input file
             // -vcodec mjpeg -> codec do tipo mjpeg
             // -vframes 1 -> obter uma frame
             // -s 640x480 -> dimensão do output
             $cmdFirstImage = " $ffmpegBinary -itsoffset -1 -i $dst -vcodec mjpeg -vframes 1 -an -f rawvideo -s 640x480 $imageFileNameAux";
-        
+
             echo "\t\t<p><code>$cmdFirstImage</code></p>\n";
             system($cmdFirstImage, $status);
             echo "\t\t<p>Status from the generation of video 1st image: $status.</p>\n";
@@ -203,9 +207,9 @@
             system($cmdVideoThumb, $status);
             echo "\t\t<p>Status from the generation of video thumb: $status.</p>\n";
             break;
-    
+
         case "audio":
-            require_once( "Zend/Media/Id3v2.php" );
+            require_once("Zend/Media/Id3v2.php");
 
             $id3 = new Zend_Media_Id3v2($dst);
 
@@ -228,7 +232,7 @@
             $resizeObj->saveImage($thumbFileNameAux, $typeAudioAPIC, 100);
             $resizeObj->close();
             break;
-        
+
         default:
             $imageFileNameAux = $dstDir . DIRECTORY_SEPARATOR . "default" . DIRECTORY_SEPARATOR . "Unknown-Large.jpg";
             $imageMimeFileName = "image";
@@ -241,10 +245,10 @@
     }
 
     // Write information about file into the data base
-    dbConnect( ConfigFile );
+    dbConnect(ConfigFile);
     $dataBaseName = $GLOBALS['configDataBase']->db;
-    
-    mysqli_select_db( $GLOBALS['ligacao'], $dataBaseName );
+
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
 
     $latitude = addslashes($lat);
     $longitude = addslashes($lon);
@@ -253,21 +257,21 @@
     $imageFileName = addslashes($imageFileNameAux);
     $thumbFileName = addslashes($thumbFileNameAux);
 
-    $query = 
-            "INSERT INTO `$dataBaseName`.`images-details`" .
-            "(`fileName`, `mimeFileName`, `typeFileName`, `imageFileName`, `imageMimeFileName`, `imageTypeFileName`, `thumbFileName`, `thumbMimeFileName`, `thumbTypeFileName`, `latitude`, `longitude`, `title`, `description`) values " .
-            "('$fileName', '$mimeFileName', '$typeFileName', '$imageFileName', '$imageMimeFileName', '$imageTypeFileName', '$thumbFileName', '$thumbMimeFileName', '$thumbTypeFileName', '$latitude', '$longitude', '$title', '$description')";
+    $query =
+        "INSERT INTO `$dataBaseName`.`images-details`" .
+        "(`fileName`, `mimeFileName`, `typeFileName`, `imageFileName`, `imageMimeFileName`, `imageTypeFileName`, `thumbFileName`, `thumbMimeFileName`, `thumbTypeFileName`, `latitude`, `longitude`, `title`, `description`) values " .
+        "('$fileName', '$mimeFileName', '$typeFileName', '$imageFileName', '$imageMimeFileName', '$imageTypeFileName', '$thumbFileName', '$thumbMimeFileName', '$thumbTypeFileName', '$latitude', '$longitude', '$title', '$description')";
 
-    if ( mysqli_query( $GLOBALS['ligacao'], $query )==false ) {
-        $msg = "Information about file could not be inserted into the data base. Details : " . dbGetLastError() ;
-    }
-    else {
+    if (mysqli_query($GLOBALS['ligacao'], $query) == false) {
+        $msg = "Information about file could not be inserted into the data base. Details : " . dbGetLastError();
+    } else {
         $msg = "Information about file was inserted into data base.";
     }
 
     dbDisconnect();
-?>
-        <p><?php echo $msg;?></p>
-        <p><a href='javascript:history.back()'>Back</a></p>
-    </body>
+    ?>
+    <p><?php echo $msg; ?></p>
+    <p><a href='javascript:history.back()'>Back</a></p>
+</body>
+
 </html>

@@ -1,0 +1,17 @@
+.nav-pills li a:hover {
+    background-color: darkgray;
+}
+
+.white-line {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+
+.bg-light-gray{
+    background-color: #B5B5B5;
+}
+
+.bg-lightest-gray{
+    background-color: #C9C9C9;
+}
