@@ -10,6 +10,8 @@ function getBrowser() {
         $userBrowser = "Internet Explorer";
     } elseif (preg_match('/MSIE/i', $userAgent)) {
         $userBrowser = "Internet Explorer";
+    } elseif (preg_match('/Edge/i', $userAgent)) {
+        $userBrowser = "Microsoft Edge";
     } elseif (preg_match('/Firefox/i', $userAgent)) {
         $userBrowser = "Mozilla Firefox";
     } elseif (preg_match('/Safari/i', $userAgent)) {

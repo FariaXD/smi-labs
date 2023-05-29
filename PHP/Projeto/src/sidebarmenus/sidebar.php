@@ -1,4 +1,19 @@
-﻿<?php include 'lib/dependenciesLinks.php.php' ?>
+﻿<?php
+
+$flags[] = FILTER_NULL_ON_FAILURE;
+
+$serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_UNSAFE_RAW, $flags);
+
+$serverPort = 81;
+
+$name = webAppName();
+
+$UrL = "http://" . $serverName . ":" . $serverPort;
+$home = $UrL . "/examples-smi/Projeto/src";
+$login = $UrL . "/examples-smi/Projeto/src/auth/loginForm.php";
+$register = $UrL . "/examples-smi/Projeto/src/auth/registerForm.php";
+#$nextUrl = "http://" . $serverName . ":" . $serverPort . $name . "processFormLogin.php";
+?>
 <div class="col-md-2 bg-light-gray min-vh-100">
     <div class="d-flex flex-column h-100">
         <div class="">
@@ -8,7 +23,7 @@
             <ul class="nav nav-pills flex-column mt-4">
                 <li class="nav-item">
                     <a href="#" class="nav-link text-white">
-                        <i class="fa-solid fa-home mr-2"></i><span class="fs-4 ms-3 d-none d-sm-inline">Home</span>
+                        <i class="fa-solid fa-home mr-2"></i><span class="fs-4 ms-3 d-none d-sm-inline" href="<?php echo $home ?>">Home</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -19,18 +34,17 @@
             </ul>
         </div>
         <div class="mt-auto p-3 align-items-center d-flex flex-column">
-            <button class="btn btn-dark mb-1 w-75">Adminstrator</button>
-            <button class="btn btn-dark mb-1 w-75">Your Content</button>
-            <button class="btn btn-dark mb-1 w-75">Publish</button>
-            <button class="btn btn-dark mb-1 w-75">Settings</button>
+            <a class="text-white btn btn-dark mb-1 w-75">Adminstrator</a>
+            <a class="text-white btn btn-dark mb-1 w-75">Your Content</a>
+            <a class="text-white btn btn-dark mb-1 w-75">Publish</a>
+            <a class="text-white btn btn-dark mb-1 w-75">Settings</a>
             <div class="white-line w-100 mt-3"></div> <!-- White line -->
-            <img src="../imgs/userplace.png" alt="User Image" class="center rounded-circle my-3" style="width: 100px; height: 100px;">
+            <img src="/examples-smi/Projeto/imgs/userplace.png" alt="User Image" class="center rounded-circle my-3" style="width: 100px; height: 100px;">
             <h5 class="text-white">User Name</h5>
             <div class="white-line w-100"></div> <!-- White line -->
             <p class="mt-3">Admin</p>
-            <button class="btn btn-dark mb-1 w-75">Login</button>
-            <button class="btn btn-dark mb-1 w-75">Register</button>
+            <a class="text-white btn btn-dark mb-1 w-75" href="<?php echo $login ?>">Login</a>
+            <a class="text-white btn btn-dark mb-1 w-75" href="<?php echo $register ?>">Register</a>
         </div>
     </div>
 </div>
-<?php include 'lib/dependenciesScripts.php' ?>

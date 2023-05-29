@@ -3,7 +3,7 @@
 define(
         "ConfigFile", 
 		$_SERVER["CONTEXT_DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . 
-		"Config" . DIRECTORY_SEPARATOR . 
+		"config" . DIRECTORY_SEPARATOR . 
 		".htconfig.xml" );
 
 $ligacao;
