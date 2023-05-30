@@ -3,7 +3,7 @@
 ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
 error_reporting(-1);
-require_once("../Lib/lib.php");
+include_once("../Lib/lib.php");
 $flags[] = FILTER_NULL_ON_FAILURE;
 
 $serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_UNSAFE_RAW, $flags);
@@ -12,10 +12,7 @@ $serverPort = 81;
 
 $name = webAppName();
 
-$NextUrL = "http://" . $serverName . ":" . $serverPort . $name . "processLoginForm.php";
-
-#$nextUrl = "http://" . $serverName . ":" . $serverPort . $name . "processFormLogin.php";
-
+$nextUrl = "http://" . $serverName . ":" . $serverPort . "/examples-smi/Projeto/src/auth/processLoginForm.php";
 ?>
 
 <head>
@@ -38,11 +35,11 @@ $NextUrL = "http://" . $serverName . ":" . $serverPort . $name . "processLoginFo
                             <table>
                                 <tr>
                                     <td>User Name</td>
-                                    <td><input type="text" name="username" placeholder="Type your name"></td>
+                                    <td><input type="text" name="username" placeholder="Type your name" required></td>
                                 </tr>
                                 <tr>
                                     <td>Password</td>
-                                    <td><input type="password" name="password" placeholder="Type your password"></td>
+                                    <td><input type="password" name="password" placeholder="Type your password" required></td>
                                 </tr>
                             </table>
                             <div class="col-12 mb-3">
@@ -55,6 +52,7 @@ $NextUrL = "http://" . $serverName . ":" . $serverPort . $name . "processLoginFo
             </div>
         </div>
     </div>
+    <script src="/examples-smi/Projeto/src/auth/js/auth.js"></script>
     <?php include '../lib/dependenciesScripts.php' ?>
 </body>
 

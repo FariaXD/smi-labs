@@ -127,32 +127,9 @@ function showAuth($authType, $realm, $message) {
     echo $message;
 }
 
-function isValid($userName, $password, $authType) {
-    $userOk = -1;
 
-    dbConnect(ConfigFile);
-    
-    $dataBaseName = $GLOBALS['configDataBase']->db;
 
-    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName );
-
-    $query = 
-            "SELECT * FROM `$dataBaseName`.`auth-$authType` " .
-            "WHERE `name`='$userName' AND `password`='$password' AND `active`='1'";
-    $result = mysqli_query($GLOBALS['ligacao'], $query);
-
-    if ( $result!=false ) {
-        $userData = mysqli_fetch_array($result);
-        $userOk = $userData['idUser'];
-    }
-    mysqli_free_result($result);
-
-    dbDisconnect();
-
-    return $userOk;
-}
-
-function existUserField($field, $value, $authType = "basic") {
+function existUserField($field, $value, $authType = "user") {
     $exists = true;
 
     dbConnect(ConfigFile);
@@ -176,66 +153,9 @@ function existUserField($field, $value, $authType = "basic") {
     return $exists;
 }
 
-function getRole($userId) {
-    $userRoles = "";
 
-    dbConnect(ConfigFile);
-    
-    $dataBaseName = $GLOBALS['configDataBase']->db;
 
-    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName );
 
-    $query = "SELECT `friendlyName` " .
-            "FROM `$dataBaseName`.`auth-basic` u " .
-            "JOIN `$dataBaseName`.`auth-permissions` p ON u.`idUser`=p.`idUser` " .
-            "JOIN `$dataBaseName`.`auth-roles` r on p.`idRole`=r.`idRole` WHERE u.`active`=1 AND u.`idUser`='$userId'";
-
-    $result = mysqli_query( $GLOBALS['ligacao'], $query );
-
-    $isFirst = true;
-    $userRoles .= "[";
-
-    while ($userData = mysqli_fetch_array($result)) {
-        if ($isFirst == true) {
-            $isFirst = false;
-        } else {
-            $userRoles .= ", ";
-        }
-
-        $userRoles .= $userData['friendlyName'];
-    }
-    $userRoles .= "]";
-
-    mysqli_free_result($result);
-
-    dbDisconnect();
-
-    return $userRoles;
-}
-
-function getEmail($idUser, $authType) {
-    $userEmail = -1;
-
-    dbConnect(ConfigFile);
-    
-    $dataBaseName = $GLOBALS['configDataBase']->db;
-
-    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName );
-
-    $query = "SELECT `email` FROM `$dataBaseName`.`auth-$authType` WHERE `idUser`='$idUser'";
-
-    $result = mysqli_query($GLOBALS['ligacao'], $query);
-
-    if ( $result!=false ) {
-        $userData = mysqli_fetch_array($result);
-        $userEmail = $userData['email'];
-    }
-    mysqli_free_result($result);
-
-    dbDisconnect();
-
-    return $userEmail;
-}
 
 function logout($authType, $realm, $location) {
     unset($_SERVER['PHP_AUTH_USER']);

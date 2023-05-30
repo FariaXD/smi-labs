@@ -2,7 +2,7 @@
 
 define(
         "ConfigFile", 
-		$_SERVER["CONTEXT_DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . 
+		$_SERVER["CONTEXT_DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . "Projeto" . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR .
 		"config" . DIRECTORY_SEPARATOR . 
 		".htconfig.xml" );
 

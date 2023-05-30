@@ -2,8 +2,9 @@
 <?php
 ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
+require_once("lib/db.php");
 error_reporting(-1);
-include_once 'lib/lib.php';
+session_start();
 ?>
 <html lang="en">
 
@@ -26,8 +27,6 @@ include_once 'lib/lib.php';
       </div>
     </div>
   </div>
-
-
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

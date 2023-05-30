@@ -24,26 +24,26 @@ $flags[] = FILTER_NULL_ON_FAILURE;
 
 $username = filter_input($_INPUT_METHOD, 'username', FILTER_UNSAFE_RAW, $flags);
 $email = filter_input($_INPUT_METHOD, 'email', FILTER_UNSAFE_RAW, $flags);
-$cemail = filter_input($_INPUT_METHOD, 'email', FILTER_UNSAFE_RAW, $flags);
+$cemail = filter_input($_INPUT_METHOD, 'cemail', FILTER_UNSAFE_RAW, $flags);
 $password = filter_input($_INPUT_METHOD, 'password', FILTER_UNSAFE_RAW, $flags);
-$cpassword = filter_input($_INPUT_METHOD, 'confirmPassword', FILTER_UNSAFE_RAW, $flags);
+$cpassword = filter_input($_INPUT_METHOD, 'cpassword', FILTER_UNSAFE_RAW, $flags);
 
 $serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_UNSAFE_RAW, $flags);
 
 $serverPort = 81;
 
 $name = webAppName();
-
-$failUrl = "http://" . $serverName . ":" . $serverPort . "/examples-smi/Projeto/src/auth/registerForm.php";
-$successUrl = "http://" . $serverName . ":" . $serverPort . "/examples-smi/Projeto/src/auth/confirmation.php";
+$baseUrl = "http://" . $serverName . ":" . $serverPort;
+$failUrl = $baseUrl . "/examples-smi/Projeto/src/auth/registerForm.php";
+$successUrl = $baseUrl . "/examples-smi/Projeto/src/auth/confirmation.php";
 $isSuccess = false;
 $nextUrl = $failUrl;
 
 session_start();
-
+echo $username . " " . $email . " " . $cemail . " " . $password . " " . $cpassword;
 header('Content-Type: text/html; charset=utf-8');
-
-if($username != "" && $email != "" && $cemail != "" && $password != "" && $cpassword != "" && $password === $cpassword && $email === $cemail){
+if($username != "" && $email != "" && $password != "" && $password == $cpassword && $email == $cemail){
+    echo "agaga";
     $ch = curl_init();
 
     curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
@@ -67,7 +67,9 @@ if($username != "" && $email != "" && $cemail != "" && $password != "" && $cpass
         }
     }
 }
+header("Location: " . $nextUrl);
 ?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">

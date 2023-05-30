@@ -25,6 +25,7 @@ $nextUrl = "http://" . $serverName . ":" . $serverPort . "/examples-smi/Projeto/
     <?php include '../lib/dependenciesLinks.php' ?>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -37,23 +38,23 @@ $nextUrl = "http://" . $serverName . ":" . $serverPort . "/examples-smi/Projeto/
                             <table>
                                 <tr>
                                     <td class="px-3">Username</td>
-                                    <td><input id="username" class="" type="text" name="username" placeholder="Type your name" required></td>
+                                    <td><input value="AAAAAA" id="username" class="" type="text" name="username" placeholder="Type your name" required></td>
                                 </tr>
                                 <tr>
                                     <td class="px-3">Email</td>
-                                    <td><input id="email" class="" type="email" name="email" placeholder="Type your email" required></td>
+                                    <td><input value="fariafactor2@gmail.com" id="email" class="" type="email" name="email" placeholder="Type your email" required></td>
                                 </tr>
                                 <tr>
                                     <td class="px-3">Confirm Email</td>
-                                    <td><input id="cemail" class="" type="email" name="cemail" placeholder="Confirm your email" required></td>
+                                    <td><input value="fariafactor2@gmail.com" id="cemail" class="" type="email" name="cemail" placeholder="Confirm your email" required></td>
                                 </tr>
                                 <tr>
                                     <td class="px-3">Password</td>
-                                    <td><input id="password" class="" type="password" name="password" placeholder="Type your password" required></td>
+                                    <td><input value="amongus123" id="password" class="" type="password" name="password" placeholder="Type your password" required></td>
                                 </tr>
                                 <tr>
                                     <td class="px-3">Confirm password</td>
-                                    <td><input id="cpassword" class="" type="password" name="cpassword" placeholder="Confirm your password" required></td>
+                                    <td><input value="amongus123" id="cpassword" class="" type="password" name="cpassword" placeholder="Confirm your password" required></td>
                                 </tr>
                                 <tr>
                                     <td class="px-3">Captcha</td>
@@ -75,4 +76,5 @@ $nextUrl = "http://" . $serverName . ":" . $serverPort . "/examples-smi/Projeto/
     <script src="/examples-smi/Projeto/src/auth/js/auth.js"></script>
     <?php include '../lib/dependenciesScripts.php' ?>
 </body>
+
 </html>
