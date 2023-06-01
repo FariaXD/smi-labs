@@ -15,4 +15,7 @@
 .bg-lightest-gray{
     background-color: #C9C9C9;
 }
+.close{
+    opacity: 100 !important;
+}
 

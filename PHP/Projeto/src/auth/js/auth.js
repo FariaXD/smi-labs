@@ -1,17 +1,4 @@
-﻿window.addEventListener("load", function () {
-  var $recaptcha = document.querySelector("#g-recaptcha-response");
-
-  if ($recaptcha) {
-    $recaptcha.setAttribute("required", "required");
-  }
-  var details = document.getElementsByClassName("formRegister");
-  for (var i = 0; i < details.length; i++) {
-    details[i].firstElementChild.onclick = function () {
-      this.parentElement.classList.toggle("close");
-    };
-  }
-});
-
+﻿
 var filterEmail, filterPassword;
 filterEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,3})$/;
 filterPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,15}$/;

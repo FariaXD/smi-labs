@@ -33,7 +33,7 @@ $nextUrl = "http://" . $serverName . ":" . $serverPort . "/examples-smi/Projeto/
             <div class="col-md-10 bg-lightest-gray">
                 <div class="row my-5 ml-5">
                     <h3 class="col-12">Register</h3>
-                    <div class="formRegister d-flex justify-content-center align-ote">
+                    <div class="formRegister d-flex justify-content-center">
                         <form class="text-center" action="<?php echo $nextUrl ?>" method="POST" onsubmit="return validateRegister(this)">
                             <table>
                                 <tr>
