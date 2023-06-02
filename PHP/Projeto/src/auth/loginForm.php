@@ -27,7 +27,7 @@ $nextUrl = "http://" . $serverName . ":" . $serverPort . "/examples-smi/Projeto/
     <div class="container-fluid">
         <div class="row">
             <?php include '../sidebarmenus/sidebar.php' ?>
-            <div class="col-md-10 bg-lightest-gray">
+            <div class="col-md-10 bg-lightest-gray ">
                 <div class="row mb-5">
                     <h3 class="col-12 mx-5 mt-5">Login</h3>
                     <div class="">

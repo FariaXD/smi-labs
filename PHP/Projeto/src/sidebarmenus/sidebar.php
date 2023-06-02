@@ -16,7 +16,7 @@ $register = $UrL . "/examples-smi/Projeto/src/auth/registerForm.php";
 #$nextUrl = "http://" . $serverName . ":" . $serverPort . $name . "processFormLogin.php";
 
 $idUser = isset($_SESSION['id']) ? $_SESSION['id'] : 0;
-if($idUser == 0){
+if ($idUser == 0) {
     $_SESSION['roleName'] = "Guest";
     $_SESSION['id'] = 0;
     $_SESSION['username'] = "Guest";
@@ -54,22 +54,20 @@ if($idUser == 0){
                     include 'admin.php';
                     break;
             }
-            ?>  
+            ?>
             <div class="white-line w-100 mt-3"></div> <!-- White line -->
             <img src="/examples-smi/Projeto/imgs/userplace.png" alt="User Image" class="center rounded-circle my-3" style="width: 100px; height: 100px;">
-            <h5 class="text-white"><?php echo $_SESSION['username']?></h5>
+            <h5 class="text-white"><?php echo $_SESSION['username'] ?></h5>
             <div class="white-line w-100"></div> <!-- White line -->
             <p class="mt-3"><?php echo $_SESSION['roleName'] ?></p>
-            <?php 
-                if($_SESSION['id'] == 0){
-                    echo '<a class="text-white btn btn-dark mb-1 w-75" href="' . $login . '">Login</a>';
-                    echo '<a class="text-white btn btn-dark mb-1 w-75" href="' . $register . '">Register</a>';
-                }
-                else{
-                    echo '<a class="text-white btn btn-dark mb-1 w-75" href="' . $logout . '">Logout</a>';
-                }
+            <?php
+            if ($_SESSION['id'] == 0) {
+                echo '<a class="text-white btn btn-dark mb-1 w-75" href="' . $login . '">Login</a>';
+                echo '<a class="text-white btn btn-dark mb-1 w-75" href="' . $register . '">Register</a>';
+            } else {
+                echo '<a class="text-white btn btn-dark mb-1 w-75" href="' . $logout . '">Logout</a>';
+            }
             ?>
-            
         </div>
     </div>
 </div>

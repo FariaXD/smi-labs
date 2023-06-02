@@ -21,7 +21,7 @@ session_start();
 <body>
   <div class="container-fluid">
     <div class="row">
-      <?php include 'sidebarmenus/sidebar.php' ?>
+      <?php include 'sidebarmenus/sidebar.php'?>
       <div class="col-md-10 bg-lightest-gray">
         <?php include 'content/home.php' ?>
       </div>

@@ -18,4 +18,13 @@
 .close{
     opacity: 100 !important;
 }
+.fixed-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
 
+.overflow-auto {
+    overflow-y: auto;
+}

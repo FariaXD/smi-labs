@@ -1,4 +1,4 @@
-﻿<html lang="en">
+﻿<!DOCTYPE html>
 <?php
 ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
@@ -14,13 +14,12 @@ $serverPort = 81;
 $name = webAppName();
 
 $nextUrl = "http://" . $serverName . ":" . $serverPort . "/examples-smi/Projeto/src/auth/processRegisterForm.php";
-
 ?>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Register Form</title>
     <?php include '../lib/dependenciesLinks.php' ?>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
