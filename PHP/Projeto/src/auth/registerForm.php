@@ -21,7 +21,7 @@ $nextUrl = "http://" . $serverName . ":" . $serverPort . "/examples-smi/Projeto/
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Register Form</title>
-    <?php include '../lib/dependenciesLinks.php' ?>
+    <?php include('../lib/dependenciesLinks.php') ?>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 

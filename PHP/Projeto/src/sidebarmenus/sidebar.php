@@ -22,7 +22,7 @@ if ($idUser == 0) {
     $_SESSION['username'] = "Guest";
 }
 ?>
-<div class="col-md-2 bg-light-gray min-vh-100">
+<div class="col-md-2 bg-light-gray min-vh-100 sidebar">
     <div class="d-flex flex-column h-100">
         <div class="">
             <a class="d-flex text-decoration-none mt-1 align-items-center justify-content-center text-white">

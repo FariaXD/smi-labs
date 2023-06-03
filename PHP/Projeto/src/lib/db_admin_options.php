@@ -103,5 +103,34 @@ function DeleteCategory($idCat){
     echo "correctly deleted category " . $delete_query_result;
 }
 
+function GetEmailService(){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $email_query = "SELECT * FROM `email-accounts` WHERE `id` = 1";
+    $email_query_result = mysqli_query($GLOBALS['ligacao'], $email_query);
+    $email = [];
+    while (($record = mysqli_fetch_array($email_query_result))) {
+        array_push($email, [$record["accountName"], $record['loginName'], $record['password'], $record['email'], $record['displayName']]);
+    }
+    return $email;
+}
+
+function UpdateMailService($accName, $loginName, $password, $email, $displayName){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $update_query_user = "UPDATE `email-accounts` SET `accountName` = '$accName',
+     `loginName` = '$loginName',
+      `password` = '$password',
+      `email` = '$email',
+      `displayName` = '$displayName' WHERE `id` = 1";
+    $update_user_result = mysqli_query($GLOBALS['ligacao'], $update_query_user);
+    if ($update_user_result) {
+        echo "The mail was updated succesfully.";
+    } else {
+        echo "Error updating mail: " . mysqli_error($GLOBALS['ligacao']);
+    }
+}
 
 ?>

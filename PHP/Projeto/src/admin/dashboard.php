@@ -26,6 +26,7 @@ session_start();
                     include 'updateUsers.php';
                     include 'addCategory.php';
                     include 'updateCategories.php';
+                    include 'updateMailService.php';
                 }
                 ?>
             </div>
