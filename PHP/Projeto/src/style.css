@@ -28,3 +28,25 @@
 .overflow-auto {
     overflow-y: auto;
 }
+
+.img-fluid{
+    object-fit: cover;
+    opacity: 69%;
+    filter: blur(2px);
+}
+
+.img-scale{
+    object-fit: contain;  
+}
+
+.img-absolute{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.trending-bg{
+    position: relative;
+    height: 35%;
+}

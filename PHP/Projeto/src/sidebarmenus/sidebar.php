@@ -30,8 +30,8 @@ if ($idUser == 0) {
             </a>
             <ul class="nav nav-pills flex-column mt-4">
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white">
-                        <i class="fa-solid fa-home mr-2"></i><span class="fs-4 ms-3 d-none d-sm-inline" href="<?php echo $home ?>">Home</span>
+                    <a href="<?php echo $home ?>" class="nav-link text-white">
+                        <i class="fa-solid fa-home mr-2"></i><span class="fs-4 ms-3 d-none d-sm-inline">Home</span>
                     </a>
                 </li>
                 <li class="nav-item">

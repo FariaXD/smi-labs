@@ -22,9 +22,7 @@ session_start();
   <div class="container-fluid">
     <div class="row">
       <?php include 'sidebarmenus/sidebar.php'?>
-      <div class="col-md-10 bg-lightest-gray">
-        <?php include 'content/home.php' ?>
-      </div>
+      <?php include 'content/home.php' ?>
     </div>
   </div>
   <!-- Optional JavaScript -->
