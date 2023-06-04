@@ -1,4 +1,4 @@
-﻿function submitForm(userId, submitAction, formData) {
+function submitForm(userId, submitAction, formData) {
   var url;
   if (submitAction === "Update") {
     url = "processUpdateUser.php?idUser=" + userId;

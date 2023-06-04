@@ -59,3 +59,13 @@ function GetContentWithMostViews()
         return null;
     }
 }
+
+function GetVideoPath($idContent){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+
+    $query = "SELECT name FROM `media-content` WHERE `idContent`='$idContent'";
+    $result = mysqli_query($GLOBALS['ligacao'], $query);
+    return mysqli_fetch_array($result)['name'];
+}

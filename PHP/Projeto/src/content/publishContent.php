@@ -1,13 +1,11 @@
-﻿<html lang="en">
 <?php
 ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
-require_once("../lib/db.php");
-require_once("../lib/db_admin_options.php");
+include_once("../lib/db.php");
+include_once("../lib/db_admin_options.php");
 
 error_reporting(-1);
 session_start();
-
 $cats = GetAllCats();
 
 ?>

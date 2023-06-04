@@ -50,3 +50,13 @@
     position: relative;
     height: 35%;
 }
+.img-filter{
+    opacity: 70%;
+    background-color: black;
+}
+.trending-text{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
