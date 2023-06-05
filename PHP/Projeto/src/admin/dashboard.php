@@ -19,7 +19,7 @@ session_start();
     <div class="container-fluid">
         <div class="row">
             <?php include '../sidebarmenus/sidebar.php' ?>
-            <div id="accordion" class="col-md-10 bg-lightest-gray">
+            <div id="accordion" class="col-md-10 bg-lightest-gray overflow-auto">
                 <?php
                 $role = isset($_SESSION['roleName']) ? $_SESSION['roleName'] : "Guest";
                 if ($role == "Admin") {

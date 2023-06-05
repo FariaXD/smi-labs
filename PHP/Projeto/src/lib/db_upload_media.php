@@ -1,14 +1,21 @@
-﻿<?php
+<?php
 ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
-function UploadMediaInfo($idUser, $name, $episodeNumb, $type, $private, $fileName){
+function UploadMediaInfo($idUser, $name, $type, $private, $fileName, $idSeries){
+    $episodeNumb = 1;
     dbConnect(ConfigFile);
     $dataBaseName = $GLOBALS['configDataBase']->db;
     mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
     $curdate = date("Y-m-d H:i:s");
+    if ($idSeries == "") {
+        $idSeries = intval(GetNextIdSeries())+1;
+    }
+    else{
+        $episodeNumb = intval(GetEpisodeNumb($idSeries))+1;
+    }
     $add_query = "INSERT INTO `media-content`" .
-    "(`idUser`, `displayName`, `episodeNumber`, `type`, `private`, `publishDate`, `name`) values " .
-    "('$idUser', '$name', '$episodeNumb', '$type', '$private', '$curdate', '$fileName')";
+    "(`idUser`, `idSeries`, `displayName`, `episodeNumber`, `type`, `private`, `publishDate`, `name`) values " .
+    "('$idUser', '$idSeries', '$name', '$episodeNumb', '$type', '$private', '$curdate', '$fileName')";
     $result = mysqli_query($GLOBALS['ligacao'], $add_query);
     return $result;
 }
@@ -49,7 +56,7 @@ function GetContentWithMostViews()
     $dataBaseName = $GLOBALS['configDataBase']->db;
     mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
 
-    $query = "SELECT * FROM `media-content` ORDER BY `views` DESC LIMIT 1";
+    $query = "SELECT * FROM `media-content` WHERE `private` = 0 ORDER BY `views` DESC LIMIT 1";
     $result = mysqli_query($GLOBALS['ligacao'], $query);
 
     if ($result && mysqli_num_rows($result) > 0) {
@@ -102,4 +109,49 @@ function AddViewToContent($content){
     } else {
         return $newViews - 1;
     }
+}
+
+/**
+ * 0 - idContent
+ * 1 - idSeries
+ * 2 - displayName
+ * 3 - name
+ * 4 - episodeNumber
+ * 5 - type
+ * 6 - private
+ * 7 - views
+ */
+function GetAllContent($idUser){
+    $allContent = [];
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+
+    $query = "SELECT * FROM `media-content` WHERE `idUser`='$idUser'";
+    $result = mysqli_query($GLOBALS['ligacao'], $query);
+    while (($record = mysqli_fetch_array($result))) {
+        array_push($allContent, [$record["idContent"],$record["idSeries"], $record["displayName"],$record["name"], $record["episodeNumber"], $record["type"], $record["private"], $record["views"],]);
+    }
+    return $allContent;
+}
+
+function GetNextIdSeries(){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $query = "SELECT * FROM `media-content` ORDER BY `idSeries` DESC LIMIT 1";
+    $result = mysqli_query($GLOBALS['ligacao'], $query);
+    $table = mysqli_fetch_array($result);
+    return $table['idSeries'];
+}
+
+
+function GetEpisodeNumb($idSeries){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $query = "SELECT `episodeNumber` FROM `media-content` WHERE `idSeries`='$idSeries'";
+    $result = mysqli_query($GLOBALS['ligacao'], $query);
+    $table = mysqli_fetch_array($result);
+    return $table['episodeNumber'];
 }

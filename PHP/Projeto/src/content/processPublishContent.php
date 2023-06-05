@@ -4,18 +4,19 @@ ini_set('display_errors', 1);
 require_once("../lib/db.php");
 require_once("../lib/db_upload_media.php");
 require_once("../lib/lib.php");
+
 session_start();
+
 $type = $_POST['type'];
 $name = $_POST['name'];
-$episodeNumb = $_POST['episodeNumb'];
 $selectedCategories = $_POST['selectedCategories'];
-$private = isset($_POST['private']) ? "1" : "0";
+$private = ($_POST['private'] == "true") ? "1" : "0";
 $content = $_FILES['content'];
+$idSeries = $_POST['idSeries'];
 
 
 echo "Type: " . $type . "<br>";
 echo "Name: " . $name . "<br>";
-echo "Episode Number: " . $episodeNumb . "<br>";
 
 echo "Selected Categories: ";
 foreach ($selectedCategories as $category) {
@@ -37,7 +38,7 @@ echo "File Type: " . $fileType . "<br>";
 $hasRole = ($_SESSION['roleName'] == "Admin" || $_SESSION['roleName'] == "Publisher") ? true : false;
 $idUser = $_SESSION['id'];
 if(!file_exists($destination) && $hasRole && $name != "" && $content != null && count($selectedCategories) > 0){
-    $result = UploadMediaInfo($idUser, $name, $episodeNumb, $type, $private, $fileName);
+    $result = UploadMediaInfo($idUser, $name, $type, $private, $fileName, $idSeries);
     if ($result == false) {
         echo "Couldnt add media to database. Details : " . dbGetLastError();
     } else {

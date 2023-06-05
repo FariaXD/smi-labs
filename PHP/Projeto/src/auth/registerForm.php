@@ -29,7 +29,7 @@ $nextUrl = "http://" . $serverName . ":" . $serverPort . "/examples-smi/Projeto/
     <div class="container-fluid">
         <div class="row">
             <?php include '../sidebarmenus/sidebar.php' ?>
-            <div class="col-md-10 bg-lightest-gray">
+            <div class="col-md-10 bg-lightest-gray overflow-auto">
                 <div class="row my-5 ml-5">
                     <h3 class="col-12">Register</h3>
                     <div class="formRegister d-flex justify-content-center">

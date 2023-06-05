@@ -3,11 +3,13 @@ ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
 include_once("../lib/db.php");
 include_once("../lib/db_admin_options.php");
+include_once("../lib/db_upload_media.php");
+
 
 error_reporting(-1);
 session_start();
 $cats = GetAllCats();
-
+$contents = GetAllContent($_SESSION['id']);
 ?>
 
 <head>
@@ -22,7 +24,7 @@ $cats = GetAllCats();
     <div class="container-fluid">
         <div class="row">
             <?php include '../sidebarmenus/sidebar.php' ?>
-            <div id="accordion" class="col-md-10 bg-lightest-gray">
+            <div id="accordion" class="col-md-10 bg-lightest-gray overflow-auto">
                 <div class="row">
                     <div class="col-md-6">
                         <form action="POST" id="publish_series">
@@ -30,11 +32,7 @@ $cats = GetAllCats();
                                 <h4 class="col-12 text-center">New Episode</h4>
                                 <div class="col-12 mb-2">
                                     <label for="name" class="control-label">Name</label>
-                                    <input class="w-100" type="text" name="name" placeholder="Type your series name" required/>
-                                </div>
-                                <div class="col-12 mb-2">
-                                    <label for="episodeNumb" class="control-label">Number of Episode</label>
-                                    <input class="w-100" type="number" name="episodeNumb" placeholder="Type the episode number" required/>
+                                    <input class="w-100" type="text" name="name" placeholder="Type your series name" required />
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="categories" class="control-label">Categories</label>
@@ -44,9 +42,18 @@ $cats = GetAllCats();
                                         <?php } ?>
                                     </select>
                                 </div>
+                                <div class="col-12 mb-2">
+                                    <label for="series" class="control-label">Series</label>
+                                    <select id="select_series_series" name="series" class="form-select w-100" aria-label="Default select example">
+                                        <option value=""></option>
+                                        <?php foreach ($contents as $content) { ?>
+                                            <option value="<?php echo $content[1] ?>"><?php echo $content[2] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
                                 <div class="col-12 mb-2 text-center">
                                     <label for="private" class="control-label">Private</label>
-                                    <input class="" type="checkbox" name="private" placeholder="Toggle private"/>
+                                    <input id="private_series" class="" type="checkbox" name="private" placeholder="Toggle private" />
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="content" class="control-label">Upload</label>
@@ -85,7 +92,7 @@ $cats = GetAllCats();
                                 <h4 class="col-12 text-center">New Movie</h4>
                                 <div class="col-12 mb-2">
                                     <label for="name" class="control-label">Name</label>
-                                    <input class="w-100" type="text" name="name" placeholder="Type your movie name" required/>
+                                    <input class="w-100" type="text" name="name" placeholder="Type your movie name" required />
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="categories" class="control-label">Categories</label>
@@ -95,9 +102,18 @@ $cats = GetAllCats();
                                         <?php } ?>
                                     </select>
                                 </div>
+                                <div class="col-12 mb-2">
+                                    <label for="series" class="control-label">Series</label>
+                                    <select id="select_series_movie" name="series" class="form-select w-100" aria-label="Default select example">
+                                        <option value=""></option>
+                                        <?php foreach ($contents as $content) { ?>
+                                            <option value="<?php echo $content[1] ?>"><?php echo $content[2] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
                                 <div class="col-12 mb-2 text-center">
                                     <label for="private" class="control-label">Private</label>
-                                    <input class="" type="checkbox" name="private" placeholder="Toggle private"/>
+                                    <input id="private_movie" class="" type="checkbox" name="private" placeholder="Toggle private" />
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="content" class="control-label">Upload</label>

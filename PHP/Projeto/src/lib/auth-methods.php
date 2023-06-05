@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/lib-mail-v2.php';
 
@@ -10,14 +10,22 @@ function insertUserIntoDB(string $username, string $password, string $email)
     $query = "INSERT INTO `$dataBaseName`.`auth-user`" .
         "(`username`, `password`, `email`, `active`) values " .
         "('$username', '$password', '$email', '0')";
-    if (mysqli_query($GLOBALS['ligacao'], $query) == false) {
-        echo "User could not be added to database. Details: " . dbGetLastError();
-        dbDisconnect();
+    try {
+        $result = mysqli_query($GLOBALS['ligacao'], $query);
+        if ($result == false) {
+            echo "User could not be added to database. Details: " . dbGetLastError();
+            dbDisconnect();
+            return false;
+        } else {
+            echo "User was added to the database.";
+            dbDisconnect();
+            return true;
+        }
+    } catch (mysqli_sql_exception $exception) {
+        
+        $errorMessage = $exception->getMessage();
         return false;
-    } else {
-        echo "User was added to the database.";
-        dbDisconnect();
-        return true;
+        
     }
 }
 

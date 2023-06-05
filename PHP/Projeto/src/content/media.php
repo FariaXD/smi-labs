@@ -33,7 +33,7 @@ $newViews = AddViewToContent($content);
     <div class="container-fluid">
         <div class="row">
             <?php include '../sidebarmenus/sidebar.php' ?>
-            <div id="accordion" class="col-md-10 bg-lightest-gray">
+            <div id="accordion" class="col-md-10 vh-100 bg-lightest-gray overflow-auto">
                 <div class="row mt-5">
                     <div class="col-md-10 pl-0">
                         <video id="my-video" class="video-js vjs-theme-city w-100 " controls preload="auto" height="580" data-setup="{}">
@@ -99,7 +99,7 @@ $newViews = AddViewToContent($content);
                             <h4 class="text-dark">Comments</h4>
                             <div class="bg-gray row justify-content-center">
                                 <?php foreach ($comments as $comment) { ?>
-                                    <div class="col-7 rounded-pill bg-light-dark w-50 my-2">
+                                    <div class="col-7 rounded bg-light-dark w-50 my-2">
                                         <div class="row">
                                             <div class="col-2 p-0">
                                                 <img src="/examples-smi/Projeto/imgs/userplace.png" alt="User Image" class="col-12 p-0 center rounded-circle my-3" style="width: 50px; height: 50px;">
