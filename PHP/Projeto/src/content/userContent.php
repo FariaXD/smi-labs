@@ -5,11 +5,9 @@ error_reporting(-1);
 session_start();
 require_once("../lib/db.php");
 require_once("../lib/lib.php");
-
-
+include_once("../lib/db_upload_media.php");
 $allContent = GetAllContent($_SESSION['id']);
-
-
+$orderedContent = OrderContent($allContent);
 ?>
 
 <head>

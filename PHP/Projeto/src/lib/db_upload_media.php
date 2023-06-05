@@ -135,6 +135,29 @@ function GetAllContent($idUser){
     return $allContent;
 }
 
+function OrderContent($allContent)
+{
+    // Create an associative array to hold the ordered content
+    $orderedContent = array();
+
+    // Iterate through all the content
+    foreach ($allContent as $content) {
+        $seriesID = $content[1]; // Assuming series ID is at index 1
+
+        // Check if the series already exists in the orderedContent array
+        if (isset($orderedContent[$seriesID])) {
+            // If the series exists, add the episode to the series
+            $orderedContent[$seriesID][] = $content;
+        } else {
+            // If the series doesn't exist, create a new series and add the episode
+            $orderedContent[$seriesID] = array($content);
+        }
+    }
+
+    // Return the ordered content
+    return $orderedContent;
+}
+
 function GetNextIdSeries(){
     dbConnect(ConfigFile);
     $dataBaseName = $GLOBALS['configDataBase']->db;
