@@ -60,12 +60,46 @@ function GetContentWithMostViews()
     }
 }
 
-function GetVideoPath($idContent){
+function GetVideoInfo($idContent){
     dbConnect(ConfigFile);
     $dataBaseName = $GLOBALS['configDataBase']->db;
     mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
 
-    $query = "SELECT name FROM `media-content` WHERE `idContent`='$idContent'";
+    $query = "SELECT * FROM `media-content` WHERE `idContent`='$idContent'";
     $result = mysqli_query($GLOBALS['ligacao'], $query);
-    return mysqli_fetch_array($result)['name'];
+    return mysqli_fetch_array($result);
+}
+
+function GetAllCommentsToMedia($idContent){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $comments = [];
+
+    $query = "SELECT `media-comment`.`idUser`, `media-comment`.`idComment`, `media-comment`.`idContent`, `media-comment`.`comment`, `auth-user`.`username`
+          FROM `media-comment`
+          INNER JOIN `auth-user` ON `media-comment`.`idUser` = `auth-user`.`IdUser`
+          WHERE `media-comment`.`idContent` = $idContent";
+    $result = mysqli_query($GLOBALS['ligacao'], $query);
+    while (($record = mysqli_fetch_array($result))) {
+        array_push($comments, [$record["idComment"], $record["idUser"], $record['comment'], $record['username']]);
+    }
+    return $comments;
+}
+
+function AddViewToContent($content){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+
+    $newViews = intval($content['views'])+1;
+    $id = $content['idContent'];
+
+    $query = "UPDATE `media-content` SET `views` = '$newViews' WHERE `idContent` = $id";
+    $update_result = mysqli_query($GLOBALS['ligacao'], $query);
+    if ($update_result) {
+        return $newViews;
+    } else {
+        return $newViews - 1;
+    }
 }
