@@ -35,7 +35,11 @@ $url = "http://" . $serverName . ":" . $serverPort;
                             $thumbnail = $url . "/examples-smi/Projeto/media/$idContent" . ".jpg";
                         ?>
                             <div class="col-12 bg-dark p-0 my-3">
-                                <img src="<?php echo $thumbnail ?>" alt="Image Description" class="rounded w-25 h-100">
+                                <!--IdSeries, displayName -->
+                                <div class="row">
+                                    <img class="col-3" src="<?php echo $thumbnail ?>" alt="Image Description" class="rounded w-25 h-100">
+
+                                </div>
                             </div>
                         <?php } ?>
                     </div>

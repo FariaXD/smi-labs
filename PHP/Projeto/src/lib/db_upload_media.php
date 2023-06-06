@@ -1,7 +1,7 @@
 <?php
 ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
-function UploadMediaInfo($idUser, $name, $type, $private, $fileName, $idSeries){
+function UploadMediaInfo($idUser, $name, $private, $fileName, $idSeries){
     $episodeNumb = 1;
     dbConnect(ConfigFile);
     $dataBaseName = $GLOBALS['configDataBase']->db;
@@ -14,8 +14,8 @@ function UploadMediaInfo($idUser, $name, $type, $private, $fileName, $idSeries){
         $episodeNumb = intval(GetEpisodeNumb($idSeries))+1;
     }
     $add_query = "INSERT INTO `media-content`" .
-    "(`idUser`, `idSeries`, `displayName`, `episodeNumber`, `type`, `private`, `publishDate`, `name`) values " .
-    "('$idUser', '$idSeries', '$name', '$episodeNumb', '$type', '$private', '$curdate', '$fileName')";
+    "(`idUser`, `idSeries`, `displayName`, `episodeNumber`, `private`, `publishDate`, `name`) values " .
+    "('$idUser', '$idSeries', '$name', '$episodeNumb', '$private', '$curdate', '$fileName')";
     $result = mysqli_query($GLOBALS['ligacao'], $add_query);
     return $result;
 }
@@ -117,9 +117,8 @@ function AddViewToContent($content){
  * 2 - displayName
  * 3 - name
  * 4 - episodeNumber
- * 5 - type
- * 6 - private
- * 7 - views
+ * 5 - private
+ * 6 - views
  */
 function GetAllContent($idUser){
     $allContent = [];
@@ -130,7 +129,7 @@ function GetAllContent($idUser){
     $query = "SELECT * FROM `media-content` WHERE `idUser`='$idUser'";
     $result = mysqli_query($GLOBALS['ligacao'], $query);
     while (($record = mysqli_fetch_array($result))) {
-        array_push($allContent, [$record["idContent"],$record["idSeries"], $record["displayName"],$record["name"], $record["episodeNumber"], $record["type"], $record["private"], $record["views"],]);
+        array_push($allContent, [$record["idContent"],$record["idSeries"], $record["displayName"],$record["name"], $record["episodeNumber"], $record["private"], $record["views"],]);
     }
     return $allContent;
 }

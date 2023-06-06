@@ -7,7 +7,7 @@ require_once("../lib/lib.php");
 
 session_start();
 
-$type = $_POST['type'];
+
 $name = $_POST['name'];
 $selectedCategories = $_POST['selectedCategories'];
 $private = ($_POST['private'] == "true") ? "1" : "0";
@@ -15,7 +15,6 @@ $content = $_FILES['content'];
 $idSeries = $_POST['idSeries'];
 
 
-echo "Type: " . $type . "<br>";
 echo "Name: " . $name . "<br>";
 
 echo "Selected Categories: ";
@@ -38,7 +37,7 @@ echo "File Type: " . $fileType . "<br>";
 $hasRole = ($_SESSION['roleName'] == "Admin" || $_SESSION['roleName'] == "Publisher") ? true : false;
 $idUser = $_SESSION['id'];
 if(!file_exists($destination) && $hasRole && $name != "" && $content != null && count($selectedCategories) > 0){
-    $result = UploadMediaInfo($idUser, $name, $type, $private, $fileName, $idSeries);
+    $result = UploadMediaInfo($idUser, $name, $private, $fileName, $idSeries);
     if ($result == false) {
         echo "Couldnt add media to database. Details : " . dbGetLastError();
     } else {
