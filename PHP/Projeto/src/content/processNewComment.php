@@ -9,8 +9,10 @@ session_start();
 $comment = $_POST['comment'];
 $idContent = $_POST['idContent'];
 $idUser= $_SESSION['id'];
+
 dbConnect(ConfigFile);
 $dataBaseName = $GLOBALS['configDataBase']->db;
 mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
 $query = "INSERT INTO `media-comment` (`idUser`, `idContent`, `comment`) values ('$idUser', '$idContent', '$comment')";
 $result = mysqli_query($GLOBALS['ligacao'], $query);
+
