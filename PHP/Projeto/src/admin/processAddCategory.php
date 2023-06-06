@@ -24,7 +24,8 @@ $categoryName = filter_input($_INPUT_METHOD, 'categoryName', FILTER_UNSAFE_RAW, 
 
 $serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_UNSAFE_RAW, $flags);
 
-$serverPort = 81;
+$serverPort = $_SERVER['SERVER_PORT'];
+;
 
 $name = webAppName();
 $baseUrl = "http://" . $serverName . ":" . $serverPort;

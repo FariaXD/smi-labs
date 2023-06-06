@@ -26,7 +26,8 @@ $password = filter_input($_INPUT_METHOD, 'password', FILTER_UNSAFE_RAW, $flags);
 
 $serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_UNSAFE_RAW, $flags);
 
-$serverPort = 81;
+$serverPort = $_SERVER['SERVER_PORT'];
+;
 
 $name = webAppName();
 $baseUrl = "http://" . $serverName . ":" . $serverPort;

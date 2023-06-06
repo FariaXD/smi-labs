@@ -35,7 +35,8 @@ if ($_SESSION['captcha'] == $captcha) {
 }
 $serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING, $flags);
 
-$serverPort = 81;
+$serverPort = $_SERVER['SERVER_PORT'];
+;
 
 $name = webAppName();
 

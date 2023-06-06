@@ -10,7 +10,7 @@ $allContent = GetAllContent($_SESSION['id']);
 $orderedContent = OrderContent($allContent);
 $flags[] = FILTER_NULL_ON_FAILURE;
 $serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_UNSAFE_RAW, $flags);
-$serverPort = 81;
+$serverPort = $_SERVER['SERVER_PORT'];
 $url = "http://" . $serverName . ":" . $serverPort;
 ?>
 
