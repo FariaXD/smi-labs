@@ -11,15 +11,17 @@ $flags[] = FILTER_NULL_ON_FAILURE;
 
 $serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_UNSAFE_RAW, $flags);
 
-$serverPort = $_SERVER['SERVER_PORT'];
-;
+$serverPort = $_SERVER['SERVER_PORT'];;
 
-$UrL = "http://" . $serverName . ":" . $serverPort;
+$url = "http://" . $serverName . ":" . $serverPort;
 $content = GetVideoInfo($idContent);
-$videoPath = $UrL . "/examples-smi/Projeto/media/" . rawurlencode($content['name']);
+$videoPath = $url . "/examples-smi/Projeto/media/" . rawurlencode($content['name']);
 
 $comments = GetAllCommentsToMedia($idContent);
 $newViews = AddViewToContent($content);
+
+$cat = GetCatViaVideo($idContent)[0];
+$related = GetContentWithCat(4, $cat, true, $idContent);
 ?>
 
 <head>
@@ -58,6 +60,17 @@ $newViews = AddViewToContent($content);
                     </div>
                     <div class="col-md-2 w-100 text-center">
                         <h5 class="text-center">Related</h5>
+                        <?php foreach ($related as $cont) {
+                            $idContent = $cont[0];
+                            $thumbnail = $url . "/examples-smi/Projeto/media/$cont[0]" . ".jpg";
+                        ?>
+                            <div class="col-md-2 mx-3 w-100">
+                                <a href="content/media.php?idContent=<?php echo $cont[0] ?>">
+                                    <img src="<?php echo $thumbnail ?>" alt="Image Description" class="rounded" style="height: 10vh;width: 10vh;">
+                                </a>
+                                <p class=""><?php echo $cont[1] ?></p>
+                            </div>
+                        <?php } ?>
                     </div>
                     <div class="col-12 mt-5 mx-auto text-center">
 

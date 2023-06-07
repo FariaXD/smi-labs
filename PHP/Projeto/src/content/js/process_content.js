@@ -38,10 +38,9 @@ function SubmitFormData(url, formData) {
     // Handle AJAX response
     console.log(xhr.responseText);
 
-    // Refresh the page after a delay
-    //setTimeout(function () {
-    //  location.reload();
-    //}, 1000); // Refresh after 2 seconds (adjust the delay as needed)
+    setTimeout(function () {
+      location.reload();
+    }, 1000); // Refresh after 2 seconds (adjust the delay as needed)
   };
   xhr.send(formData);
 }
