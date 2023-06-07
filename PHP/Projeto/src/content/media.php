@@ -65,7 +65,7 @@ $related = GetContentWithCat(4, $cat, true, $idContent);
                             $thumbnail = $url . "/examples-smi/Projeto/media/$cont[0]" . ".jpg";
                         ?>
                             <div class="col-md-2 mx-3 w-100">
-                                <a href="content/media.php?idContent=<?php echo $cont[0] ?>">
+                                <a href="media.php?idContent=<?php echo $cont[0] ?>">
                                     <img src="<?php echo $thumbnail ?>" alt="Image Description" class="rounded" style="height: 10vh;width: 10vh;">
                                 </a>
                                 <p class=""><?php echo $cont[1] ?></p>
