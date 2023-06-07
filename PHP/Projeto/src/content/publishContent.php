@@ -2,14 +2,13 @@
 ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
 include_once("../lib/db.php");
-include_once("../lib/db_admin_options.php");
 include_once("../lib/db_upload_media.php");
 
 
 error_reporting(-1);
 session_start();
 $cats = GetAllCats();
-$contents = GetAllContent($_SESSION['id']);
+$series = GetAllSeriesNames($_SESSION['id']);
 ?>
 
 <head>
@@ -46,8 +45,8 @@ $contents = GetAllContent($_SESSION['id']);
                                     <label for="series" class="control-label">Series</label>
                                     <select id="select_series_series" name="series" class="form-select w-100" aria-label="Default select example">
                                         <option value=""></option>
-                                        <?php foreach ($contents as $content) { ?>
-                                            <option value="<?php echo $content[1] ?>"><?php echo $content[2] ?></option>
+                                        <?php foreach ($series as $serie) { ?>
+                                            <option value="<?php echo $serie[0] ?>"><?php echo $serie[1] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>

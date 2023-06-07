@@ -39,7 +39,7 @@
 }
 
 .img-scale{
-    object-fit: contain;  
+    object-fit: fill;  
 }
 
 .img-absolute{

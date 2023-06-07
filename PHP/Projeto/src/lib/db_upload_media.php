@@ -21,9 +21,9 @@ function UploadMediaInfo($idUser, $name, $private, $fileName, $idSeries){
 }
 
 function UploadContentToLocation($content, $selectedCategories){
+    $location = '/examples-php/Projeto/media/';
     $idContent =  mysqli_insert_id($GLOBALS['ligacao']);
     echo "Media was added to the database.";
-    $location = '/examples-php/Projeto/media/';
     $destination = $location . $content['name'];
     move_uploaded_file($content['tmp_name'], $destination);
     $thumbNailLocation = $location . $idContent . ".jpg";
@@ -174,6 +174,213 @@ function GetEpisodeNumb($idSeries){
     mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
     $query = "SELECT `episodeNumber` FROM `media-content` WHERE `idSeries`='$idSeries'";
     $result = mysqli_query($GLOBALS['ligacao'], $query);
-    $table = mysqli_fetch_array($result);
-    return $table['episodeNumber'];
+    $table = mysqli_num_rows($result);
+    return $table;
+}
+function GetAllSeriesNames($idUser)
+{
+    $series = [];
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $select_query = "SELECT DISTINCT `idSeries`, `displayName` FROM `media-content` WHERE `episodeNumber` = 1 AND `idUser`=$idUser";
+    $update_user_result = mysqli_query($GLOBALS['ligacao'], $select_query);
+    while (($record = mysqli_fetch_array($update_user_result))) {
+        array_push($series, [$record["idSeries"], $record["displayName"]]);
+    }
+    return $series;
+}
+
+function updateEpisodeNumber($idContent, $idSeries, $newEpisodeNumber, $oldEpisodeNumber)
+{
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    // Retrieve the series and episodes with the same $idSeries
+    $query = "SELECT `idContent`, `episodeNumber` FROM `media-content` WHERE `idSeries` = $idSeries ORDER BY `episodeNumber`";
+    $result = mysqli_query($GLOBALS['ligacao'], $query);
+
+    $updates = []; // Array to store the updates
+
+    // Iterate over the episodes and determine the necessary updates
+    while ($row = mysqli_fetch_assoc($result)) {
+        $currentIdContent = $row['idContent'];
+        $currentEpisodeNumber = $row['episodeNumber'];
+
+        if ($currentIdContent == $idContent) {
+            // Update the episode number of the specified episode
+            $updates[] = "UPDATE `media-content` SET `episodeNumber` = $newEpisodeNumber WHERE `idContent` = $currentIdContent";
+        } elseif ($currentEpisodeNumber >= $newEpisodeNumber && $currentEpisodeNumber < $oldEpisodeNumber) {
+            // Shift the episode numbers forward for episodes that come after the updated episode
+            $newEpisode = $currentEpisodeNumber + 1;
+            $updates[] = "UPDATE `media-content` SET `episodeNumber` = $newEpisode WHERE `idContent` = $currentIdContent";
+        } elseif ($currentEpisodeNumber > $oldEpisodeNumber && $currentEpisodeNumber <= $newEpisodeNumber) {
+            // Shift the episode numbers backward for episodes that come between the updated episode and the original episode number
+            $newEpisode = $currentEpisodeNumber - 1;
+            $updates[] = "UPDATE `media-content` SET `episodeNumber` = $newEpisode WHERE `idContent` = $currentIdContent";
+        }
+    }
+
+    // Execute all the update queries
+    foreach ($updates as $updateQuery) {
+        mysqli_query($GLOBALS['ligacao'], $updateQuery);
+    }
+
+    // Return the updates array for debugging
+    return $updates;
+}
+
+function updateEpisodeNumberChangedSeries($idContent, $idSeries){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    // Retrieve the series and episodes with the same $idSeries
+    $query = "SELECT `idContent`, `episodeNumber` FROM `media-content` WHERE `idSeries` = $idSeries ORDER BY `episodeNumber`";
+    $result = mysqli_query($GLOBALS['ligacao'], $query);
+    $numRows = mysqli_num_rows($result);
+    $update = "UPDATE `media-content` SET `episodeNumber` = $numRows WHERE `idContent` = $idContent";
+    $result_update = mysqli_query($GLOBALS['ligacao'], $update);
+    return $result_update;
+}
+
+
+function updateContent($idContent, $displayName, $series, $private){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $query = "UPDATE `media-content` SET `displayName` = '$displayName', `idSeries` = $series, `private` = $private WHERE `idContent` = $idContent";
+    $result = mysqli_query($GLOBALS['ligacao'], $query);
+    return $result;
+}
+
+function getNameWithIdContent($idContent){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $query = "SELECT `name` FROM `media-content` WHERE `idContent`=$idContent";
+    $result = mysqli_query($GLOBALS['ligacao'], $query);
+    $record = mysqli_fetch_array($result);
+    return $record['name'];
+}
+
+function deleteContent($idContent){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $nameFile = getNameWithIdContent($idContent);
+    $query = "DELETE FROM `media-content` WHERE `idContent` = $idContent";
+    $result = mysqli_query($GLOBALS['ligacao'], $query);
+    $location = '/examples-php/Projeto/media/';
+    if($result){
+        unlink($location . $idContent . ".jpg");
+        unlink($location . $nameFile);
+    }
+    return $result;
+}
+
+function reorderEpisodeNumbers($idSeries)
+{
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+
+    // Retrieve the rows of the series ordered by episodeNumber
+    $query = "SELECT `idContent`, `episodeNumber` FROM `media-content` WHERE `idSeries` = $idSeries ORDER BY `episodeNumber`";
+    $result = mysqli_query($GLOBALS['ligacao'], $query);
+
+    $updates = []; // Array to store the updates
+
+    // Iterate over the rows and update the episode numbers accordingly
+    $newEpisodeNumber = 1;
+    while ($row = mysqli_fetch_assoc($result)) {
+        $currentIdContent = $row['idContent'];
+        $currentEpisodeNumber = $row['episodeNumber'];
+
+        // Update the episode number if it is different from the new episode number
+        if ($currentEpisodeNumber != $newEpisodeNumber) {
+            $updates[] = "UPDATE `media-content` SET `episodeNumber` = $newEpisodeNumber WHERE `idContent` = $currentIdContent";
+        }
+
+        $newEpisodeNumber++; // Increment the new episode number
+    }
+
+    // Execute all the update queries
+    foreach ($updates as $updateQuery) {
+        mysqli_query($GLOBALS['ligacao'], $updateQuery);
+    }
+
+    // Return the updates array for debugging or further use if needed
+    return $updates;
+}
+function GetAllCats()
+{
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $select_cats_query = "SELECT * FROM `media-category`";
+    $select_cats_query_result = mysqli_query($GLOBALS['ligacao'], $select_cats_query);
+    $cats = [];
+    while (($record = mysqli_fetch_array($select_cats_query_result))) {
+        array_push($cats, [$record["idCategory"], $record['categoryName']]);
+    }
+    return $cats;
+}
+
+function GetContentWithCat($count, $idCategory, $self, $idContent){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $content = [];
+    $query = "SELECT `media-content`.*, `media-content-categories`.*
+          FROM `media-content`
+          LEFT JOIN `media-content-categories` ON `media-content-categories`.`idContent` = `media-content`.`idContent`
+          WHERE `media-content-categories`.`idCategory` = '$idCategory'
+          LIMIT $count"; 
+    if($count == 0){
+        $query = "SELECT `media-content`.*, `media-content-categories`.*
+          FROM `media-content`
+          LEFT JOIN `media-content-categories` ON `media-content-categories`.`idContent` = `media-content`.`idContent`
+          WHERE `media-content-categories`.`idCategory` = '$idCategory' LIMIT $count"; 
+    }
+    if($self){
+        $query = "SELECT `media-content`.*, `media-content-categories`.*
+        FROM `media-content`
+        LEFT JOIN `media-content-categories` ON `media-content-categories`.`idContent` = `media-content`.`idContent`
+        WHERE `media-content-categories`.`idCategory` = '$idCategory' 
+        AND `media-content`.`idContent` <> $idContent LIMIT $count"; 
+    }
+    $query_contents = mysqli_query($GLOBALS['ligacao'], $query);
+    while (($record = mysqli_fetch_array($query_contents))) {
+        array_push($content, [$record['idContent'], $record['displayName']]);
+    }
+    return $content;
+}
+
+function GetRandomContent($count){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+    $query = "SELECT * FROM `media-content` ORDER BY RAND() LIMIT $count";
+    $content = [];
+    $query_contents = mysqli_query($GLOBALS['ligacao'], $query);
+    while (($record = mysqli_fetch_array($query_contents))) {
+        array_push($content, [$record['idContent'], $record['displayName']]);
+    }
+    return $content;
+}
+
+function GetCatViaVideo($idContent){
+    dbConnect(ConfigFile);
+    $dataBaseName = $GLOBALS['configDataBase']->db;
+    mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
+
+    $query = "SELECT `idCategory` FROM `media-content-categories` WHERE `idContent`=$idContent";
+
+    $query_contents = mysqli_query($GLOBALS['ligacao'], $query);
+    $cats = [];
+    while (($record = mysqli_fetch_array($query_contents))) {
+        array_push($cats, $record['idCategory']);
+    }
+
+    return $cats;
 }

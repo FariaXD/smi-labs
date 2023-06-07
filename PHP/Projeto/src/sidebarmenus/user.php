@@ -1,1 +1,1 @@
-﻿<a class="text-white btn btn-dark mb-1 w-75">Settings</a>
+﻿<a class="text-white btn btn-dark mb-1 w-75" href="/examples-smi/Projeto/src/content/userSettings.php">Settings</a>

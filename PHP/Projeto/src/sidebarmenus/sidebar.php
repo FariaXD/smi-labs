@@ -6,11 +6,12 @@ $flags[] = FILTER_NULL_ON_FAILURE;
 
 $serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_UNSAFE_RAW, $flags);
 
-$serverPort = $_SERVER['SERVER_PORT'];
-;
+$serverPort = $_SERVER['SERVER_PORT'];;
 
 $UrL = "http://" . $serverName . ":" . $serverPort;
 $home = $UrL . "/examples-smi/Projeto/src";
+$categories = $UrL . "/examples-smi/Projeto/src/content/allCategories.php";
+
 $login = $UrL . "/examples-smi/Projeto/src/auth/loginForm.php";
 $logout = $UrL . "/examples-smi/Projeto/src/auth/processLogout.php";
 $register = $UrL . "/examples-smi/Projeto/src/auth/registerForm.php";
@@ -36,7 +37,7 @@ if ($idUser == 0) {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white">
+                    <a href="<?php echo $categories ?>" class="nav-link text-white">
                         <i class="fs-5 fa fa-list mr-2"></i><span class="fs-4 ms-3 d-none d-sm-inline">Categories</span>
                     </a>
                 </li>
