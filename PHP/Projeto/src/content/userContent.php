@@ -28,7 +28,7 @@ $url = "http://" . $serverName . ":" . $serverPort;
     <div class="container-fluid">
         <div class="row">
             <?php include '../sidebarmenus/sidebar.php' ?>
-            <div id="accordion" class="col-md-10 bg-lightest-gray overflow-auto">
+            <div id="accordion" class="col-md-10 vh-100 bg-lightest-gray overflow-auto">
                 <?php foreach ($orderedContent as $series) { ?>
                     <h5><?php echo $series[0][2] ?></h5>
                     <div class="row m-0 p-0 w-100 justify-content-center align-items-center">

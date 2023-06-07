@@ -26,7 +26,7 @@ $content = GetContentWithCat(0, $_GET['category'], false, 0);
     <div class="container-fluid">
         <div class="row">
             <?php include '../sidebarmenus/sidebar.php' ?>
-            <div id="accordion" class="col-md-10 bg-lightest-gray overflow-auto">
+            <div id="accordion" class="col-md-10 vh-100 bg-lightest-gray overflow-auto">
                 <h4>Categories</h4>
                 <div class="row">
                     <?php foreach ($content as $cont) {
@@ -35,7 +35,7 @@ $content = GetContentWithCat(0, $_GET['category'], false, 0);
                     ?>
                         <div class="col-md-2 mx-3">
                             <h3 class="text-truncate"><?php echo $cont[1] ?></h3>
-                                <a href="media.php?idContent=<?php echo $cont[0] ?>"><img src="<?php echo $thumbnail ?>" alt="Image Description" class="rounded" style="height: 20vh;width: 20vh;"></a>
+                            <a href="media.php?idContent=<?php echo $cont[0] ?>"><img src="<?php echo $thumbnail ?>" alt="Image Description" class="rounded" style="height: 20vh;width: 20vh;"></a>
                         </div>
                     <?php } ?>
                 </div>

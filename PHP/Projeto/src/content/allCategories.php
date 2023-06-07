@@ -26,7 +26,7 @@ $cats = GetAllCats();
     <div class="container-fluid">
         <div class="row">
             <?php include '../sidebarmenus/sidebar.php' ?>
-            <div id="accordion" class="col-md-10 bg-lightest-gray overflow-auto">
+            <div id="accordion" class="col-md-10 vh-100 bg-lightest-gray overflow-auto">
                 <h4>Categories</h4>
                 <?php foreach ($cats as $cat) {
                     $contentCat = GetContentWithCat(5, $cat[0], false, 0);

@@ -63,3 +63,7 @@
     left: 0;
     right: 0;
 }
+
+.ratio-1x1{
+    aspect-ratio: 1/1;
+}

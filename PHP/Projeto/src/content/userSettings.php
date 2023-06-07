@@ -25,7 +25,7 @@ $url = "http://" . $serverName . ":" . $serverPort;
     <div class="container-fluid">
         <div class="row">
             <?php include '../sidebarmenus/sidebar.php' ?>
-            <div id="accordion" class="col-md-10 bg-lightest-gray overflow-auto">
+            <div id="accordion" class="col-md-10 vh-100 bg-lightest-gray overflow-auto">
                 <form id="user" method="POST">
                     <div class="row bg-light">
                         <h3 class="col-12 text-dark text-center">User</h3>
