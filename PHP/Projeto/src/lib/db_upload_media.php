@@ -334,19 +334,19 @@ function GetContentWithCat($count, $idCategory, $self, $idContent){
     $query = "SELECT `media-content`.*, `media-content-categories`.*
           FROM `media-content`
           LEFT JOIN `media-content-categories` ON `media-content-categories`.`idContent` = `media-content`.`idContent`
-          WHERE `media-content-categories`.`idCategory` = '$idCategory'
+          WHERE `media-content-categories`.`idCategory` = '$idCategory' AND `private` = 0
           LIMIT $count"; 
     if($count == 0){
         $query = "SELECT `media-content`.*, `media-content-categories`.*
           FROM `media-content`
           LEFT JOIN `media-content-categories` ON `media-content-categories`.`idContent` = `media-content`.`idContent`
-          WHERE `media-content-categories`.`idCategory` = '$idCategory' LIMIT $count"; 
+          WHERE `media-content-categories`.`idCategory` = '$idCategory' AND `private` = 0"; 
     }
     if($self){
         $query = "SELECT `media-content`.*, `media-content-categories`.*
         FROM `media-content`
         LEFT JOIN `media-content-categories` ON `media-content-categories`.`idContent` = `media-content`.`idContent`
-        WHERE `media-content-categories`.`idCategory` = '$idCategory' 
+        WHERE `media-content-categories`.`idCategory` = '$idCategory' AND `private` = 0
         AND `media-content`.`idContent` <> $idContent LIMIT $count"; 
     }
     $query_contents = mysqli_query($GLOBALS['ligacao'], $query);
@@ -360,7 +360,7 @@ function GetRandomContent($count){
     dbConnect(ConfigFile);
     $dataBaseName = $GLOBALS['configDataBase']->db;
     mysqli_select_db($GLOBALS['ligacao'], $dataBaseName);
-    $query = "SELECT * FROM `media-content` ORDER BY RAND() LIMIT $count";
+    $query = "SELECT * FROM `media-content` WHERE `private` = 0 ORDER BY RAND() LIMIT $count";
     $content = [];
     $query_contents = mysqli_query($GLOBALS['ligacao'], $query);
     while (($record = mysqli_fetch_array($query_contents))) {

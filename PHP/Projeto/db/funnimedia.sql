@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 07, 2023 at 05:21 PM
+-- Generation Time: Jun 07, 2023 at 05:34 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `funnimedia`
 --
-CREATE DATABASE IF NOT EXISTS `funnimedia` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `funnimedia`;
 
 -- --------------------------------------------------------
 
@@ -29,12 +27,10 @@ USE `funnimedia`;
 -- Table structure for table `auth-challenge`
 --
 
-DROP TABLE IF EXISTS `auth-challenge`;
-CREATE TABLE IF NOT EXISTS `auth-challenge` (
+CREATE TABLE `auth-challenge` (
   `idUser` int(11) NOT NULL,
   `challenge` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `registerDate` date NOT NULL,
-  KEY `idUser` (`idUser`)
+  `registerDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -50,12 +46,9 @@ INSERT INTO `auth-challenge` (`idUser`, `challenge`, `registerDate`) VALUES
 -- Table structure for table `auth-permissions`
 --
 
-DROP TABLE IF EXISTS `auth-permissions`;
-CREATE TABLE IF NOT EXISTS `auth-permissions` (
+CREATE TABLE `auth-permissions` (
   `idRole` int(11) NOT NULL,
-  `idUser` int(11) NOT NULL,
-  KEY `idUser` (`idUser`),
-  KEY `idRole` (`idRole`)
+  `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -72,11 +65,9 @@ INSERT INTO `auth-permissions` (`idRole`, `idUser`) VALUES
 -- Table structure for table `auth-roles`
 --
 
-DROP TABLE IF EXISTS `auth-roles`;
-CREATE TABLE IF NOT EXISTS `auth-roles` (
+CREATE TABLE `auth-roles` (
   `idRole` int(11) NOT NULL,
-  `roleName` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`idRole`)
+  `roleName` varchar(128) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -94,17 +85,13 @@ INSERT INTO `auth-roles` (`idRole`, `roleName`) VALUES
 -- Table structure for table `auth-user`
 --
 
-DROP TABLE IF EXISTS `auth-user`;
-CREATE TABLE IF NOT EXISTS `auth-user` (
-  `idUser` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `auth-user` (
+  `idUser` int(11) NOT NULL,
   `username` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  PRIMARY KEY (`idUser`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `auth-user`
@@ -120,9 +107,8 @@ INSERT INTO `auth-user` (`idUser`, `username`, `email`, `password`, `active`) VA
 -- Table structure for table `email-accounts`
 --
 
-DROP TABLE IF EXISTS `email-accounts`;
-CREATE TABLE IF NOT EXISTS `email-accounts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `email-accounts` (
+  `id` int(11) NOT NULL,
   `accountName` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `smtpServer` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `port` int(11) NOT NULL,
@@ -131,9 +117,8 @@ CREATE TABLE IF NOT EXISTS `email-accounts` (
   `loginName` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `displayName` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `displayName` varchar(128) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `email-accounts`
@@ -148,13 +133,10 @@ INSERT INTO `email-accounts` (`id`, `accountName`, `smtpServer`, `port`, `useSSL
 -- Table structure for table `media-category`
 --
 
-DROP TABLE IF EXISTS `media-category`;
-CREATE TABLE IF NOT EXISTS `media-category` (
-  `idCategory` int(11) NOT NULL AUTO_INCREMENT,
-  `categoryName` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`idCategory`),
-  UNIQUE KEY `SECONDARY` (`categoryName`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `media-category` (
+  `idCategory` int(11) NOT NULL,
+  `categoryName` varchar(64) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `media-category`
@@ -171,16 +153,12 @@ INSERT INTO `media-category` (`idCategory`, `categoryName`) VALUES
 -- Table structure for table `media-comment`
 --
 
-DROP TABLE IF EXISTS `media-comment`;
-CREATE TABLE IF NOT EXISTS `media-comment` (
-  `idComment` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `media-comment` (
+  `idComment` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
   `idContent` int(11) NOT NULL,
-  `comment` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`idComment`),
-  KEY `idUser` (`idUser`),
-  KEY `idContent` (`idContent`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `comment` varchar(128) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `media-comment`
@@ -195,9 +173,8 @@ INSERT INTO `media-comment` (`idComment`, `idUser`, `idContent`, `comment`) VALU
 -- Table structure for table `media-content`
 --
 
-DROP TABLE IF EXISTS `media-content`;
-CREATE TABLE IF NOT EXISTS `media-content` (
-  `idContent` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `media-content` (
+  `idContent` int(11) NOT NULL,
   `idSeries` int(11) DEFAULT NULL,
   `idUser` int(11) NOT NULL,
   `displayName` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
@@ -205,23 +182,15 @@ CREATE TABLE IF NOT EXISTS `media-content` (
   `episodeNumber` int(11) NOT NULL,
   `private` tinyint(1) NOT NULL,
   `publishDate` date NOT NULL,
-  `views` int(11) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`idContent`),
-  UNIQUE KEY `name` (`name`),
-  KEY `idUser` (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `views` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `media-content`
 --
 
 INSERT INTO `media-content` (`idContent`, `idSeries`, `idUser`, `displayName`, `name`, `episodeNumber`, `private`, `publishDate`, `views`) VALUES
-(3, 2, 1, 'val2', 'val.mp4', 1, 0, '2023-06-05', 59),
-(15, 2, 1, 'dsa', 'camera1.mov', 2, 0, '2023-06-07', 3),
-(16, 2, 1, '765', 'minecraft.mp4', 3, 0, '2023-06-07', 2),
-(17, 3, 1, '43', 'Minecraft Adventures #125.mp4', 1, 0, '2023-06-07', 1),
-(18, 4, 1, '443', 'cat.mp4', 1, 0, '2023-06-07', 3),
-(19, 5, 1, '42423', 'teste.mov', 1, 0, '2023-06-07', 0);
+(18, 4, 1, '443', 'cat.mp4', 1, 0, '2023-06-07', 3);
 
 -- --------------------------------------------------------
 
@@ -229,12 +198,9 @@ INSERT INTO `media-content` (`idContent`, `idSeries`, `idUser`, `displayName`, `
 -- Table structure for table `media-content-categories`
 --
 
-DROP TABLE IF EXISTS `media-content-categories`;
-CREATE TABLE IF NOT EXISTS `media-content-categories` (
+CREATE TABLE `media-content-categories` (
   `idCategory` int(11) NOT NULL,
-  `idContent` int(11) NOT NULL,
-  KEY `media-content-categories_ibfk_1` (`idCategory`),
-  KEY `media-content-categories_ibfk_2` (`idContent`)
+  `idContent` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -242,12 +208,108 @@ CREATE TABLE IF NOT EXISTS `media-content-categories` (
 --
 
 INSERT INTO `media-content-categories` (`idCategory`, `idContent`) VALUES
-(1, 3),
-(1, 15),
-(1, 16),
-(1, 17),
-(1, 18),
-(1, 19);
+(1, 18);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `auth-challenge`
+--
+ALTER TABLE `auth-challenge`
+  ADD KEY `idUser` (`idUser`);
+
+--
+-- Indexes for table `auth-permissions`
+--
+ALTER TABLE `auth-permissions`
+  ADD KEY `idUser` (`idUser`),
+  ADD KEY `idRole` (`idRole`);
+
+--
+-- Indexes for table `auth-roles`
+--
+ALTER TABLE `auth-roles`
+  ADD PRIMARY KEY (`idRole`);
+
+--
+-- Indexes for table `auth-user`
+--
+ALTER TABLE `auth-user`
+  ADD PRIMARY KEY (`idUser`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indexes for table `email-accounts`
+--
+ALTER TABLE `email-accounts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `media-category`
+--
+ALTER TABLE `media-category`
+  ADD PRIMARY KEY (`idCategory`),
+  ADD UNIQUE KEY `SECONDARY` (`categoryName`);
+
+--
+-- Indexes for table `media-comment`
+--
+ALTER TABLE `media-comment`
+  ADD PRIMARY KEY (`idComment`),
+  ADD KEY `idUser` (`idUser`),
+  ADD KEY `idContent` (`idContent`);
+
+--
+-- Indexes for table `media-content`
+--
+ALTER TABLE `media-content`
+  ADD PRIMARY KEY (`idContent`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `idUser` (`idUser`);
+
+--
+-- Indexes for table `media-content-categories`
+--
+ALTER TABLE `media-content-categories`
+  ADD KEY `media-content-categories_ibfk_1` (`idCategory`),
+  ADD KEY `media-content-categories_ibfk_2` (`idContent`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `auth-user`
+--
+ALTER TABLE `auth-user`
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `email-accounts`
+--
+ALTER TABLE `email-accounts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `media-category`
+--
+ALTER TABLE `media-category`
+  MODIFY `idCategory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `media-comment`
+--
+ALTER TABLE `media-comment`
+  MODIFY `idComment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `media-content`
+--
+ALTER TABLE `media-content`
+  MODIFY `idContent` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Constraints for dumped tables
