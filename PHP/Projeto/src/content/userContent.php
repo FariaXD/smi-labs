@@ -31,7 +31,7 @@ $url = "http://" . $serverName . ":" . $serverPort;
             <div id="accordion" class="col-md-10 vh-100 bg-lightest-gray overflow-auto">
                 <?php foreach ($orderedContent as $series) { ?>
                     <h5><?php echo $series[0][2] ?></h5>
-                    <div class="row m-0 p-0 w-100 justify-content-center align-items-center">
+                    <div class="m-0 p-0 w-100 justify-content-center align-items-center">
                         <?php foreach ($series as $serie) {
                             $idContent = $serie[0];
                             $thumbnail = $url . "/examples-smi/Projeto/media/$idContent" . ".jpg";
